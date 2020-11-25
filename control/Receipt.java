@@ -1,6 +1,6 @@
 package control;
 
-public class Receipt{
+public class Receipt {
     private User buyer;
     private int ticketNumber;
     private String movie;
@@ -10,7 +10,7 @@ public class Receipt{
     private double price;
     private boolean isCredit;
 
-    public Receipt(User b, int num, String m, String t, String show, String s, double p, boolean credit){
+    public Receipt(User b, int num, String m, String t, String show, String s, double p, boolean credit) {
         buyer = b;
         ticketNumber = num;
         movie = m;
@@ -19,5 +19,9 @@ public class Receipt{
         seat = s;
         price = p;
         isCredit = credit;
+    }
+
+    public int getTicketNumber() {
+        return ticketNumber;
     }
 }

@@ -1,24 +1,24 @@
 package control;
+
 import java.util.ArrayList;
 
+public class PurchaseProcess {
+    private ArrayList<String> ticketInfo;
+    private ArrayList<String> userInfo;
 
-public class PurchaseProcess{
-    private ArrayList <String> ticketInfo;
-    private ArrayList <String> userInfo;
-
-    public void createReceipt(){
-        
-    }
-
-    public void addReciept(){
+    public void createReceipt() {
 
     }
 
-    public void emailUser(){
+    public void addReciept() {
 
     }
 
-    public void paymentAPI(){
-        
+    public void emailUser() {
+
+    }
+
+    public void paymentAPI() {
+
     }
 }

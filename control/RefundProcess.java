@@ -1,7 +1,7 @@
 package control;
 
-public class RefundProcess{
-    public void modifyReciept(){
-        
+public class RefundProcess extends PurchaseProcess {
+    public void modifyReciept() {
+
     }
 }
