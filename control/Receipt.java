@@ -1,7 +1,7 @@
 package control;
 
 public class Receipt{
-    //private User buyer;
+    private User buyer;
     private int ticketNumber;
     private String movie;
     private String theatre;
@@ -10,8 +10,8 @@ public class Receipt{
     private double price;
     private boolean isCredit;
 
-    public Receipt(/*User b,*/ int num, String m, String t, String show, String s, double p, boolean credit){
-        //buyer = b;
+    public Receipt(User b, int num, String m, String t, String show, String s, double p, boolean credit){
+        buyer = b;
         ticketNumber = num;
         movie = m;
         theatre = t;
