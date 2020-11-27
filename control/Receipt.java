@@ -28,4 +28,9 @@ public class Receipt{
     public int getNum(){
         return ticketNumber;
     }
+
+    public String toString(){
+        return "User : " + buyer + "\nNumber : " + ticketNumber + " Movie : " + movie + " Theatre : " + theatre
+         + " Showtime : " + showtime + " Seat : " + seat + " Price : " + price + " Credit" + isCredit;
+    }
 }

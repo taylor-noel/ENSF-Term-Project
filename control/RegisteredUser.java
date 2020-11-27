@@ -11,4 +11,8 @@ public class RegisteredUser extends User{
     public boolean isRegistered(){
         return isRegistered;
     }
+
+    public String toString(){
+        return super.toString();
+    }
 }

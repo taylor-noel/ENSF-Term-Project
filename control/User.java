@@ -12,5 +12,9 @@ public class User{
         address = add;
         email = e;
     }
+
+    public String toString(){
+        return "Name : " + firstName + ", " + lastName + " Address : " + address + " Email : " + email;
+    }
     
 }

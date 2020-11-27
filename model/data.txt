@@ -94,13 +94,28 @@ Tickets:
         The Mall
         Pual_Blart@themall.ca
     }
-    1273482
+    1273481
     Pual Blart Mall cop 3
     Paul Blart memorial theatre
     2:00 am to 6:00 am
-    1b
+    1a
     150
-    false
+    0
+}
+{
+    {
+        Martha
+        Blart
+        The Mall
+        Martha_Blart@themall.ca
+    }
+    1273482
+    Pual Blart Mall cop 2
+    Cinemax
+    1:00 am to 3:00 am
+    1a
+    150
+    0
 }
 
 Registered Users:
@@ -109,7 +124,12 @@ Registered Users:
     Blart
     The Mall
     Matha_Blart@themall.ca
-    true;
+}
+{
+    Paul
+    Blart
+    The Mall
+    Paul_Blart@themall.ca
 }
 
 Current Ticket Number:
