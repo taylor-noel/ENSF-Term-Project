@@ -20,4 +20,12 @@ public class Receipt{
         price = p;
         isCredit = credit;
     }
+    
+    public void setCredit(boolean credit){
+        isCredit = credit;
+    }
+
+    public int getNum(){
+        return ticketNumber;
+    }
 }

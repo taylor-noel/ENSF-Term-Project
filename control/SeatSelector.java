@@ -15,7 +15,7 @@ public class SeatSelector{
 
     }
 
-    public String selectSeat(){
-
+    public void selectSeat(String seat){
+        seat = new Seat(seat);
     }
 }

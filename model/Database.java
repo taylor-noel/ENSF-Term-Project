@@ -3,13 +3,14 @@ package model;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
-// import control.*;
+import control.*;
 import java.io.IOException;
 
 public class Database{
-    // private ArrayList<RegisteredUser> registered_users;
-    //private ArrayList<Receipt> tickets;
+    private ArrayList<RegisteredUser> registered_users;
+    private ArrayList<Receipt> tickets;
     private ArrayList<Movie> movies;
+    private int currentTicketNum;
 
     private BufferedReader in;
 
@@ -20,6 +21,8 @@ public class Database{
     {
         in = new BufferedReader(new FileReader(filepath));
         movies = new ArrayList<Movie>();
+        tickets = new ArrayList<Receipt>();
+        registered_users = new ArrayList<RegisteredUser>();
 
         String line = readItem();
         while(line.equals("{"))
@@ -55,9 +58,41 @@ public class Database{
 
             movies.add(newM);
             line = readItem();
-            if(line == null)
+            if(!line.equals("}")){
+                System.out.println("I should not be seeing this");
                 break;
+            }
         }
+
+        while(!line.equals("Tickets:"))
+            line = readItem();
+
+        line = readItem();
+        while(line.equals("{")){
+            readItem();
+            User newU = new User(readItem(), readItem(), readItem(), readItem());
+            readItem();
+            Receipt newR = new Receipt(newU, readItem(0), readItem(), readItem(),
+                readItem(), readItem(), readItem(0.0), readItem(true));
+            tickets.add(newR);
+            readItem();
+            line = readItem();
+        }
+
+        while(!line.equals("Registered Users:"))
+            line = readItem();
+
+        line = readItem();
+        while(line.equals("{")){
+            RegisteredUser newRU = new RegisteredUser(readItem(), readItem(), readItem(), readItem(), true);
+            registered_users.add(newRU);
+            readItem();
+            line = readItem();
+        }
+
+        while(!line.equals("Current Ticket Number:"))
+            line = readItem();
+        currentTicketNum = readItem(0);
 
         in.close();
     }
@@ -98,13 +133,33 @@ public class Database{
         }
     }
 
-    // public ArrayList<Receipt> getTicket(){
-    //     return tickets;
-    // }
+    public ArrayList<Receipt> getTicket(){
+        return tickets;
+    }
 
-    // public ArrayList<RegisteredUser> getUsers(){
-    //     return registered_users;
-    // }
+    public ArrayList<RegisteredUser> getUsers(){
+        return registered_users;
+    }
+
+    public int getTicketNum(){
+        return currentTicketNum++;
+    }
+
+    public Movie findMovie(String s){
+        for( Movie m : movies){
+            if(m.getName().equals(s))
+                return m;
+        }
+        return null;
+    }
+
+    public Receipt findTicket(int num){
+        for(Receipt r : tickets){
+            if(r.getNum() == num)
+                return r;
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         Database db = new Database();
