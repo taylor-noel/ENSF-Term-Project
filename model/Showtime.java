@@ -42,6 +42,17 @@ public class Showtime {
         return movie;
     }
 
+    public Seat selectSeat(ArrayList<String> seat){
+        int row = Integer.parseInt(seat.get(0));
+        char letter = seat.get(1).charAt(0);
+        for( Seat s : seats){
+            if((s.getRow() == row) && (s.getLetter() == letter))
+                return s;
+        }
+        return null;
+    }
+
+
     public String toString(){
         return "Showtime : " + start_time+" to "+end_time + ", Movie : " + movie.toString();
     }

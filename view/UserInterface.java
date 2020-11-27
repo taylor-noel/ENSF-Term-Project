@@ -7,7 +7,7 @@ import javax.swing.*;
 //import control.UserInterfaceController;
 
 public class UserInterface extends JFrame {
-    JButton select_movie, choose_seat, purchase_ticket, refund_ticket, register;
+    JButton select_movie, miscB, purchase_ticket, refund_ticket, register;
     JLabel title;
     JPanel title_panel, button_panel;
 
@@ -16,7 +16,8 @@ public class UserInterface extends JFrame {
 
     // UserInterfaceController control;
 
-    public UserInterface(/* UserInterfaceController control */) {
+    public UserInterface (/* UserInterfaceController control */) {
+        try{
         // this.control = control;
 
         // Creating Button Panel
@@ -43,17 +44,21 @@ public class UserInterface extends JFrame {
 
         // getting user information before starting app
         // control.getUserInfo();
+
         for (String s : getUserInfo())
             System.out.println(s);
-
+        }
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
     }
 
     /**
      * Returns the information of user back to UserInterFaceController
      * 
-     * @return
+     * @return user information to UIController
      */
-    private ArrayList<String> getUserInfo() {
+    public ArrayList<String> getUserInfo() {
         ArrayList<String> userInfo = new ArrayList<>();
         try {
             userInfo.add(JOptionPane.showInputDialog(null, "Enter your first name:", "User Login",
@@ -94,7 +99,7 @@ public class UserInterface extends JFrame {
     /**
      * Create the JPanel for showing buttons
      */
-    private void getButtonPanel() {
+    private void getButtonPanel() throws Exception{
         button_panel = new JPanel();
 
         // Creating buttons
@@ -104,17 +109,19 @@ public class UserInterface extends JFrame {
         select_movie.setFocusPainted(false);
         select_movie.setVisible(true);
 
-        choose_seat = new JButton("Choose Seat");
-        choose_seat.setForeground(Color.white);
-        choose_seat.setBackground(Color.gray);
-        choose_seat.setFocusPainted(false);
-        choose_seat.setVisible(true);
+        //this button is being used to show different things one after other
+        //first to see all theatres and then showtimes and then seats
+        miscB = new JButton("Choose Seat");
+        miscB.setForeground(Color.white);
+        miscB.setBackground(Color.gray);
+        miscB.setFocusPainted(false);
+        miscB.setVisible(false);
 
         purchase_ticket = new JButton("Purchase Ticket");
         purchase_ticket.setForeground(Color.white);
         purchase_ticket.setBackground(Color.gray);
         purchase_ticket.setFocusPainted(false);
-        purchase_ticket.setVisible(true);
+        purchase_ticket.setVisible(false);
 
         refund_ticket = new JButton("Refund Ticket");
         refund_ticket.setForeground(Color.white);
@@ -130,10 +137,10 @@ public class UserInterface extends JFrame {
 
         // Adding Button Listeners
         select_movie.addActionListener((ActionEvent e) -> {
-            // control.getMovie();
+           searchMov();
         });
-        choose_seat.addActionListener((ActionEvent e) -> {
-            // control.getSeat();
+        miscB.addActionListener((ActionEvent e) -> {
+           checkTheatres();
         });
         purchase_ticket.addActionListener((ActionEvent e) -> {
             // control.purchaseTicket();
@@ -142,16 +149,48 @@ public class UserInterface extends JFrame {
             // control.refundTicket();
         });
         register.addActionListener((ActionEvent e) -> {
-         userinfo.add("t");
             // control.registerUser();
+            register.setVisible(false);
         });
 
         // add buttons to button_panel
         button_panel.add(select_movie);
-        button_panel.add(choose_seat);
+        button_panel.add(miscB);
         button_panel.add(purchase_ticket);
         button_panel.add(refund_ticket);
         button_panel.add(register);
+    }
+
+    public void searchMov(){
+         String movName = JOptionPane.showInputDialog(null,"Please enter the name of the movie:");
+            System.out.println(movName);
+
+            //obtain list of movie title strings from database 
+            //display list on the GUI 
+
+          //  boolean res = control.setMovie(movName);
+           /* if(res == false){
+                ta.setText("Sorry, we can not find the movie...\n\nError 404\n\nPlease try again!");
+            }
+            else{*/
+                select_movie.setText("Search new Movie");
+               
+                //Set 2nd button to show all theatres
+                miscB.setText("Find all Theatres");
+                miscB.setVisible(true);
+           // }
+    }
+
+    public void checkTheatres(){
+        //
+    }
+
+    public void checkTheatres(){
+        
+    }
+
+    public void checkTheatres(){
+        
     }
 
     /**
@@ -178,7 +217,27 @@ public class UserInterface extends JFrame {
 
         ta.setText("\nPlease Enter your information to continue... ");
 
-        ta.setEditable(false);
+     
+
+    public void updateScrollPanel(){
+        
+    }   ta.setEditable(false);
+
+        display = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        display.setBackground(Color.DARK_GRAY);
+    }   ta.setEditable(false);
+
+        display = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        display.setBackground(Color.DARK_GRAY);
+    }   ta.setEditable(false);
+
+        display = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        display.setBackground(Color.DARK_GRAY);
+    }   ta.setEditable(false);
+
+        display = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        display.setBackground(Color.DARK_GRAY);
+    }   ta.setEditable(false);
 
         display = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         display.setBackground(Color.DARK_GRAY);

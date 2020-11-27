@@ -1,0 +1,51 @@
+# database format: 
+# (member variables denoted by [name])
+# tabulation is optional 
+# tabulation is optional but much more readable
+# vertical spacing is strict
+Movies:
+{
+    [movie name]
+    {
+        [theate name]
+        [address]
+        {
+            [showtime start]
+            [shotime end]
+            {
+                [seat number]
+                [seat letter]
+                [price]
+                [is available (0 or 1)]
+            }
+        }
+    }
+}
+
+Tickets:
+{
+    {
+        [User first name]
+        [User last name]
+        [User address]
+        [User email]
+    }
+    [Ticket number]
+    [Movie name]
+    [Theatre name]
+    [Showtime string]
+    [seat number and letter]
+    [cost]
+    [is credit (0 or 1)]
+}
+
+Registered Users:
+{
+    [User first name]
+    [User last name]
+    [User address]
+    [User email]
+}
+
+Current Ticket Number:
+[curent ticket number]

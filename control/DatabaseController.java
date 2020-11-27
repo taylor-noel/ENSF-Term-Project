@@ -1,8 +1,17 @@
 package control;
-import model.*;
+import model.Database;
+import model.Movie;
+import java.util.ArrayList;
 
 public class DatabaseController{
     private Database database;
+    private static DatabaseController onlyInstance;
+
+    public static DatabaseController getOnlyInstance(){
+        if(onlyInstance == null)
+            onlyInstance = new DatabaseController();
+        return onlyInstance;
+    }
 
     public Movie searchMovie(String name){
         return database.findMovie(name);
@@ -12,12 +21,32 @@ public class DatabaseController{
         database.getTicket().add(ticket);
     }
 
-//get the ticket from database finder and then change the receipt so that isCredit is true
     public void modifyTicket(int ticketNum){
-        
+        Receipt receipt = database.findTicket(ticketNum);
+       receipt.setCreditTrue();
     }
 
     public void addRegUser(RegisteredUser user){
         database.getUsers().add(user);
     }
+
+    public ArrayList<String> getMovieNames(){
+        return database.getMovieNames();
+    }
+
+    public Movie getMovieAtIndex(int n){
+        return database.getMovieAtIndex(n);
+    }
+
+    public void saveDatabase(){
+        database.save();
+    }
+
+    // public Theatre searchTheatre(String name){
+    //     return database.findTheatre(name);
+    // }
+
+    // public ShowTime searchShowTime(String name){
+    //     return database.findShowTime(name);
+    // }
 }

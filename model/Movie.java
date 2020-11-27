@@ -21,6 +21,14 @@ public class Movie {
         return theatres;
     }
 
+    public Theatre searchTheatre(String name){
+        for( Theatre t : theatres){
+            if(t.getName().equals(name))
+                return t;
+        }
+        return null;
+    }
+
     public String toString(){
         return "Movie name : " + name;
     }

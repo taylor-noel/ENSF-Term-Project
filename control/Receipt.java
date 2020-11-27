@@ -21,12 +21,40 @@ public class Receipt{
         isCredit = credit;
     }
     
-    public void setCredit(boolean credit){
-        isCredit = credit;
+    public void setCreditTrue(){
+        isCredit = true;
+    }
+
+    public User getBuyer(){
+        return buyer;
     }
 
     public int getNum(){
         return ticketNumber;
+    }
+    
+    public String getMovieTitle(){
+        return movie;
+    }
+
+    public String getTheatreName(){
+        return theatre;
+    }
+
+    public String getShowtime(){
+        return showtime;
+    }
+
+    public String getSeat(){
+        return seat;
+    }
+
+    public double getPrice(){
+        return price;
+    }
+
+    public boolean isCredit(){
+        return isCredit;
     }
 
     public String toString(){

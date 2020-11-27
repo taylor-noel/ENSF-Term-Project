@@ -1,7 +1,10 @@
 package control;
 
 public class RefundProcess{
-    public void modifyReciept(){
-        
+
+    public RefundProcess(){}
+
+    public void modifyReciept(int num){
+       DatabaseController.getOnlyInstance().modifyTicket(num);
     }
 }

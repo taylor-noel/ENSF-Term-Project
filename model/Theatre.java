@@ -34,6 +34,14 @@ public class Theatre{
         return showtimes;
     }
 
+    public Showtime searchShowtime(String start){
+        for( Showtime s : showtimes){
+            if(s.getStartTime().equals(name))
+                return s;
+        }
+        return null;
+    }
+
     public String toString(){
         return "Theatre name : " + name + ", Address : " + address;
     }

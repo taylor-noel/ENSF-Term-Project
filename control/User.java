@@ -13,6 +13,22 @@ public class User{
         email = e;
     }
 
+    public String getFirstName(){
+        return firstName;
+    }
+
+    public String getLastName(){
+        return lastName;
+    }
+
+    public String getAddress(){
+        return address;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
     public String toString(){
         return "Name : " + firstName + ", " + lastName + " Address : " + address + " Email : " + email;
     }
