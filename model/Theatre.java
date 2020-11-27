@@ -12,6 +12,16 @@ public class Theatre{
         address = a;
         showtimes = s;
     }
+
+    Theatre(String n, String a){
+        name = n;
+        address = a;
+        showtimes = new ArrayList<Showtime>();
+    }
+
+    public void addShowtime(Showtime s){
+        showtimes.add(s);
+    }
     
     public String getAddress() {
         return address;
@@ -22,5 +32,9 @@ public class Theatre{
     
     public ArrayList<Showtime> getShowtimes(){
         return showtimes;
+    }
+
+    public String toString(){
+        return "Theatre name : " + name + ", Address : " + address;
     }
 }

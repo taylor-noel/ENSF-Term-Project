@@ -28,4 +28,8 @@ public class Seat {
     public boolean isAvailable(){
         return available;
     }
+
+    public String toString(){
+        return "Seat : " + row + letter + ", price : " + price + ", available : " + available;
+    }
 }

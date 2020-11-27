@@ -1,0 +1,86 @@
+{
+    Paul Blart, Mall Cop 3
+    {
+        Paul Blart memorial theatre
+        12 centre street Calgary, AB
+        {
+            2:00 am
+            6:00 am
+            {
+                1
+                a
+                150
+                0
+            }
+            {
+                1
+                b
+                150
+                1
+            }
+        }
+    }
+    {
+        Cinemax
+        44 Gaetz Ave. Red Deer, AB
+        {
+            1:00 am
+            3:00 am
+            {
+                1
+                a
+                150
+                0
+            }
+            {
+                1
+                b
+                150
+                1
+            }
+        }
+    }
+}
+{
+    Paul Blart, Mall Cop 2
+    {
+        Paul Blart memorial theatre
+        12 centre street Calgary, AB
+        {
+            2:00 am
+            6:00 am
+            {
+                1
+                a
+                150
+                0
+            }
+            {
+                1
+                b
+                150
+                1
+            }
+        }
+    }
+    {
+        Cinemax
+        44 Gaetz Ave. Red Deer, AB
+        {
+            1:00 am
+            3:00 am
+            {
+                1
+                a
+                150
+                0
+            }
+            {
+                1
+                b
+                150
+                1
+            }
+        }
+    }
+}

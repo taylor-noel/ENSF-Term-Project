@@ -15,6 +15,17 @@ public class Showtime {
         movie = m;
     }
 
+    public Showtime(String s, String e, Movie m){
+        start_time = s;
+        end_time = e;
+        movie = m;
+        seats = new ArrayList<Seat>();
+    }
+
+    public void addSeat(Seat s){
+        seats.add(s);
+    }
+
     public String getStartTime(){
         return start_time;
     }
@@ -32,8 +43,6 @@ public class Showtime {
     }
 
     public String toString(){
-        return start_time+" to "+end_time;
+        return "Showtime : " + start_time+" to "+end_time + ", Movie : " + movie.toString();
     }
-
-    
 }
