@@ -1,70 +1,84 @@
 package control;
+
 import model.*;
 import view.*;
 import java.util.ArrayList;
 
-
-public class UserInterfaceController{
+public class UserInterfaceController {
     private UserInterface UI;
     private MovieSearcher movie_searcher;
     private SeatSelector seat_selector;
     private PurchaseProcess purchase_process;
     private RegisterProcess register_process;
     private RefundProcess refund_process;
-    
-    private ArrayList <String> ticketInfo;
-    private ArrayList <String> userInfo;
+
+    private ArrayList<String> ticketInfo;
+    private ArrayList<String> userInfo;
 
     private Movie selected_movie;
 
-    public UserInterfaceController(){
+    public UserInterfaceController() {
         movie_searcher = new MovieSearcher();
         UI = new UserInterface(this);
     }
 
-    public boolean setMovie(String movie){
+    public ArrayList<String> getMovies() {
+
+        // return (databaseController.getMovieNamess());
+    }
+
+    public boolean setMovie(String movie) {
         selected_movie = movie_searcher.searchMovie(movie);
-        seat_selector = new SeatSelector(selected_movie);
-        if(selected_movie == null){
+        if (selected_movie == null) {
             return false;
         }
+        seat_selector = new SeatSelector(selected_movie);
         return true;
     }
 
-    public ArrayList<Theatre> getTheatres(){
-        return selected_movie.getTheatres();
+    public ArrayList<String> getTheatres() {
+        ArrayList<String> tNames = new ArrayList<>();
+        for (Theatre t : selected_movie.getTheatres()) {
+            tNames.add(t.getName());
+        }
+        return tNames;
     }
 
-    public void setTheatre(String theatreName){
+    public void setTheatre(String theatreName) {
         seat_selector.selectTheatre(theatreName);
     }
 
-    public ArrayList<Showtime> getShowtimes(){
-        return seat_selector.getSelectedTheatre().getShowtimes();
+    public ArrayList<String> getShowtimes() {
+        ArrayList<String> sTime = new ArrayList<>();
+        for (Showtime s: seat_selector.getSelectedTheatre().getShowtimes(){
+            sTime.add(s.toString());
+        }
+        return sTime;
     }
 
-    public void setShowTime(String showTime){
-        seat_selector.selectShowtime(showTime);;
+    public void setShowTime(String showTime) {
+        seat_selector.selectShowtime(showTime);
+        ;
     }
 
-    public boolean setSeat(ArrayList<String> seat){
+    public boolean setSeat(ArrayList<String> seat) {
         seat_selector.selectSeat(seat);
-        if(seat_selector.getSelectedSeat() == null){
+        if (seat_selector.getSelectedSeat() == null) {
             return false;
         }
         return true;
     }
 
-    public void startPurchase(){
+    public void startPurchase() {
         purchase_process.createReceipt();
     }
 
-    public void startRefund(int ticketNum){
+    public void startRefund(int ticketNum) {
         refund_process.modifyReciept(ticketNum);
     }
 
-    public void getUserInfo(){
-       // this.userInfo = UI.getUserInfo();
+    public void getUserInfo() {
+        // this.userInfo = UI.getUserInfo();
     }
 
     public void registerUser() {
