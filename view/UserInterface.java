@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class UserInterface extends JFrame {
     JButton select_movie, miscB, purchase_ticket, refund_ticket, register;
-    JLabel title;
+    JLabel title_label;
     JPanel title_panel, button_panel;
 
     JScrollPane display;
@@ -16,9 +16,9 @@ public class UserInterface extends JFrame {
 
     // UserInterfaceController control;
 
-    public UserInterface (/* UserInterfaceController control */) {
+    public UserInterface (/*TEST UserInterfaceController control */) {
         try{
-        // this.control = control;
+        //TEST this.control = control;
 
         // Creating Button Panel
         getButtonPanel();
@@ -43,11 +43,11 @@ public class UserInterface extends JFrame {
         setTitle("Movie Registration Application");
 
         // getting user information before starting app
-        // control.getUserInfo();
+        //TEST control.getUserInfo();
 
         for (String s : getUserInfo())
             System.out.println(s);
-        }
+        
         } catch (Exception e) {
           e.printStackTrace();
         }
@@ -140,7 +140,7 @@ public class UserInterface extends JFrame {
            searchMov();
         });
         miscB.addActionListener((ActionEvent e) -> {
-           checkTheatres();
+           //checkTheatres();
         });
         purchase_ticket.addActionListener((ActionEvent e) -> {
             // control.purchaseTicket();
@@ -181,27 +181,15 @@ public class UserInterface extends JFrame {
            // }
     }
 
-    public void checkTheatres(){
-        //
-    }
-
-    public void checkTheatres(){
-        
-    }
-
-    public void checkTheatres(){
-        
-    }
-
     /**
      * Creates the JPanel for showing title
      */
     private void getTitlePanel() {
         title_panel = new JPanel();
-        title = new JLabel("Welcome!");
-        title.setForeground(Color.white);
-        title.setBackground(Color.gray);
-        title_panel.add(title);
+        title_label = new JLabel("Welcome!");
+        title_label.setForeground(Color.white);
+        title_label.setBackground(Color.gray);
+        title_panel.add(title_label);
         title_panel.revalidate();
     }
 
@@ -216,31 +204,16 @@ public class UserInterface extends JFrame {
         ta.setBackground(Color.gray);
 
         ta.setText("\nPlease Enter your information to continue... ");
-
+    }
      
 
     public void updateScrollPanel(){
         
-    }   ta.setEditable(false);
+        ta.setEditable(false);
 
         display = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         display.setBackground(Color.DARK_GRAY);
-    }   ta.setEditable(false);
-
-        display = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        display.setBackground(Color.DARK_GRAY);
-    }   ta.setEditable(false);
-
-        display = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        display.setBackground(Color.DARK_GRAY);
-    }   ta.setEditable(false);
-
-        display = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        display.setBackground(Color.DARK_GRAY);
-    }   ta.setEditable(false);
-
-        display = new JScrollPane(ta, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        display.setBackground(Color.DARK_GRAY);
+        ta.setEditable(false);
     }
 
     public static void main(String[] args) {

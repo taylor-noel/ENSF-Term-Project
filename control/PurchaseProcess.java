@@ -32,21 +32,4 @@ public class PurchaseProcess{
         //ask UI to generate a popup to confirm payment 
     }
     //leaving this comment here so this doesnt duplicate itself!!! !!!
-}ublic void createReceipt(){
-        User current_user = new User(userInfo.get(0), userInfo.get(1),  userInfo.get(2), userInfo.get(3));
-        int ticketNumber = 0;
-        Receipt new_reciept = new Receipt(current_user, ticketNumber, ticketInfo[0], ticketInfo[1], ticketInfo[2], ticketInfo[3], Double.parseDouble(ticketInfo[4]),Boolean.parseBoolean(ticketInfo[5]));
-    }
-
-    public void addReciept(){
-
-    }
-
-    public void emailUser(){
-
-    }
-
-    public void paymentAPI(){
-        
-    }
 }
