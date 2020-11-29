@@ -2,7 +2,6 @@ package view;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import javax.swing.*;
 //import control.UserInterfaceController;
@@ -16,7 +15,6 @@ public class UserInterface extends JFrame {
     JTextArea ta;
 
     char miscFlag; // flag to determine misc button status
-    String tName;
 
     // UserInterfaceController control;
 
@@ -163,14 +161,25 @@ public class UserInterface extends JFrame {
         // Adding Button Listeners
         select_movie.addActionListener((ActionEvent e) -> {
             searchMov();
+            showTheatres();
+            // Set 2nd button to show all theatres
+            miscB.setText("Select movie's Theatre");
+            miscFlag = 't';
+            miscB.setVisible(true);
         });
         miscB.addActionListener((ActionEvent e) -> {
             if (miscFlag == 't') {
                 chooseTheatre();
+                showShowTimes();
+                miscB.setText("Select Showtime");
+                miscFlag = 's';
             } else if (miscFlag == 's') {
-                // chooseShowTimes();
+                chooseShowTimes();
+                miscB.setText("Select a Seat");
+                miscFlag = 'f';
             } else if (miscFlag == 'f') {
-                // chooseSeat();
+                SeatView sv = new SeatView();
+                sv.getSeat();
             }
         });
         purchase_ticket.addActionListener((ActionEvent e) -> {
@@ -190,6 +199,15 @@ public class UserInterface extends JFrame {
         button_panel.add(purchase_ticket);
         button_panel.add(refund_ticket);
         button_panel.add(register);
+    }
+
+    public void chooseShowTimes() {
+        String sTime = "";
+        sTime = JOptionPane.showInputDialog(null, "Please enter the showTime:");
+        System.out.println(sTime);
+        // control.setTheatre(tName);
+
+        ta.setText("You have selected " + sTime);
     }
 
     public void showShowTimes() {
@@ -216,9 +234,6 @@ public class UserInterface extends JFrame {
         // control.setTheatre(tName);
 
         ta.setText("You have selected " + tName + ", \n\t Following are the available showtimes... \n\n\n\t");
-        showShowTimes();
-        miscB.setText("Select Showtime");
-        miscFlag = 's';
     }
 
     /**
@@ -242,12 +257,6 @@ public class UserInterface extends JFrame {
 
         ta.setText("You have selected to watch:\n\n\n\t" + movName
                 + "\n\n\n\nPlease choose from following theatres...\n\n\t");
-
-        showTheatres();
-        // Set 2nd button to show all theatres
-        miscB.setText("Select movie's Theatre");
-        miscFlag = 't';
-        miscB.setVisible(true);
     }
 
     /**
@@ -255,7 +264,7 @@ public class UserInterface extends JFrame {
      */
     public void showTheatres() {
         // ArrayList<String> tAvail = control.getTheatres();
-        tName = "";
+        String tName = "";
 
         // for testing
         ArrayList<String> tAvail = new ArrayList<>();

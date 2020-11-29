@@ -56,6 +56,12 @@ public class UserInterfaceController {
         return sTime;
     }
 
+    public ArrayList<String> getAllSeats() {
+        for (Seat s : seat_selector.getSelectedShowTime().getSeats()) {
+            // send all seats
+        }
+    }
+
     public void setShowTime(String showTime) {
         seat_selector.selectShowtime(showTime);
         ;
