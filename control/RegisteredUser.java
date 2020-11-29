@@ -15,4 +15,9 @@ public class RegisteredUser extends User{
     public String toString(){
         return super.toString();
     }
+
+    public boolean equals(RegisteredUser ru){
+        return firstName.equals(ru.getEmail()) && lastName.equals(ru.getLastName()) &&
+            address.equals(ru.getAddress()) && email.equals(ru.getEmail());
+    }
 }

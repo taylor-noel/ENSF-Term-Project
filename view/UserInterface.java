@@ -97,25 +97,30 @@ public class UserInterface extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
 
-        // asks user to check whether or not they are registered
-        // asks to register if they are not already registered.
-        // sets 5th arrayList element either f(false), t(true)
+        //creates a registered used class  
+        RegisteredUser ru = new RegisteredUser(userInfo[0], userInfo[1], userInfo[2], userInfo[3], userInfo[4], true);
+
+        //checks with database to see if user is actually registered 
+        boolean registered = control.checkRegUser(ru);
+
+        //if registered
+        if(registered){
+            //set userInfo[5] = true
+            userInfo[5] = "true";
+            //continue to menu
+        }else{    
+        //if not registered
         try {
-            int res = JOptionPane.showConfirmDialog(null, "Are you a registered user?", "User Login",
-                    JOptionPane.YES_NO_OPTION);
-            if (res == JOptionPane.NO_OPTION) {
-                if (JOptionPane.showConfirmDialog(null, "Would you like to register?", "User Login",
-                        JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
-                    userInfo.add("f");
-                } else {
+            //display "Would you like to register?" message
+            if (JOptionPane.showConfirmDialog(null, "Would you like to register?", "Register Prompy", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     JOptionPane.showMessageDialog(null, "Please press the register button at bottom of the screen...");
                 }
-            } else {
-                userInfo.add("t");
-            }
-        } catch (Exception e) {
+            } catch (Exception e) {
             e.printStackTrace();
+            }
+            userInfo.add("false");
         }
+        
         return userInfo;
     }
 
@@ -178,15 +183,16 @@ public class UserInterface extends JFrame {
                 miscB.setText("Select a Seat");
                 miscFlag = 'f';
             } else if (miscFlag == 'f') {
-                SeatView sv = new SeatView();
+                SeatView sv = new SeatView(/*control.getAllSeats()*/);
                 sv.getSeat();
             }
         });
         purchase_ticket.addActionListener((ActionEvent e) -> {
-            // control.purchaseTicket();
+            String message = control.purchaseTicket();
+            ta.setText(message);
         });
         refund_ticket.addActionListener((ActionEvent e) -> {
-            // control.refundTicket();
+            control.refundTicket();
         });
         register.addActionListener((ActionEvent e) -> {
             // control.registerUser();

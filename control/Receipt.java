@@ -53,6 +53,10 @@ public class Receipt{
         return price;
     }
 
+    public void applyAdminFee(){
+        price *= 0.85;
+    }
+
     public boolean isCredit(){
         return isCredit;
     }

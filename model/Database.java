@@ -276,6 +276,14 @@ public class Database{
         return null;
     }
 
+    public boolean isRegistered(RegisteredUser userToCheck){
+        for(RegisteredUser ru : registered_users)
+            if(ru.equals(userToCheck))
+                return true;
+        
+        return false;
+    }
+
     public ArrayList<String> getMovieNames(){
         ArrayList<String> names = new ArrayList<String>();
         for(Movie m : movies)

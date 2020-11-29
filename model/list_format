@@ -45,6 +45,7 @@ Registered Users:
     [User last name]
     [User address]
     [User email]
+    [Is registered (true/false)]
 }
 
 Current Ticket Number:

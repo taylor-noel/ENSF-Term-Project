@@ -21,9 +21,11 @@ public class DatabaseController{
         database.getTicket().add(ticket);
     }
 
-    public void modifyTicket(int ticketNum){
+    public void modifyTicket(int ticketNum, boolean registered){
         Receipt receipt = database.findTicket(ticketNum);
-       receipt.setCreditTrue();
+        receipt.setCreditTrue();
+        if(!registered)
+            receipt.applyAdminFee();
     }
 
     public void addRegUser(RegisteredUser user){
@@ -36,6 +38,14 @@ public class DatabaseController{
 
     public Movie getMovieAtIndex(int n){
         return database.getMovieAtIndex(n);
+    }
+
+    public int getTicketNumber(){
+        return database.getTicketNum();
+    }
+
+    public boolean isRegistered(RegisteredUser ru){
+        return database.isRegistered(ru);
     }
 
     public void saveDatabase(){

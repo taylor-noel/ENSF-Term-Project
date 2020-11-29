@@ -21,13 +21,13 @@ public class UserInterfaceController {
 
     public UserInterfaceController() {
         movie_searcher = new MovieSearcher();
-        UI = new UserInterface(this);
+        UI = new UserInterface(this);   
     }
 
-    public ArrayList<String> getMovies() {
+    // public ArrayList<String> getMovies() {
 
-        // return (databaseController.getMovieNamess());
-    }
+    //     return (databaseController.getMovieNames());
+    // }
 
     public boolean setMovie(String movie) {
         selected_movie = movie_searcher.searchMovie(movie);
@@ -52,16 +52,18 @@ public class UserInterfaceController {
 
     public ArrayList<String> getShowtimes() {
         ArrayList<String> sTime = new ArrayList<>();
-        for (Showtime s: seat_selector.getSelectedTheatre().getShowtimes(){
+        for (Showtime s: seat_selector.getSelectedTheatre().getShowtimes()){
             sTime.add(s.toString());
         }
         return sTime;
     }
 
     public ArrayList<String> getAllSeats() {
+        ArrayList<String> seatInfo = new ArrayList<>();
         for (Seat s : seat_selector.getSelectedShowTime().getSeats()) {
-            // send all seats
+           seatInfo.add(s.getRow()+" "+s.getLetter()+" "+s.getPrice()+" "+s.isAvailable());
         }
+        return seatInfo;
     }
 
     public void setShowTime(String showTime) {
@@ -76,8 +78,7 @@ public class UserInterfaceController {
         return true;
     }
 
-    public void startPurchase() {
-        
+    public String purchaseTicket() {
         //checks to see if the user has inputted valid information and selected a seat 
         if(!ticketInfo.isEmpty() && !userInfo.isEmpty()){
             purchase_process = new PurchaseProcess(ticketInfo, userInfo);
@@ -86,32 +87,48 @@ public class UserInterfaceController {
             //popup for confirming purchase 
             int confirmed = JOptionPane.showConfirmDialog(null, "Confirm Purchase?", "User Login", JOptionPane.YES_NO_OPTION);
 
-            //if confirmed, continue
+            //if the user cancels
             if(confirmed == JOptionPane.NO_OPTION){
-                purchase_process.addReciept();
-            }else{
-                //display cancel message 
-                return;
-            }
-            //else return and display 
+                
+                //return cancel message 
+                return "Payment has been cancelled";
 
-            purchase_process.emailUser();
-            //print reciept to screen 
+            }
+
+            //send a email of the reciept to user 
+            // purchase_process.emailUser();
+
+            //print reciept to the text area 
+            return purchase_process.getReceipt().toString();
         }else{
             //pop up informing user to select a seat first 
+            return "Cannot purchase a ticket. Please select a seat first";
         }
     }
 
-    public void startRefund(int ticketNum) {
-        refund_process.modifyReciept(ticketNum);
+    public void refundTicket() {
+        //create a Refund Process object 
+        refund_process = new RefundProcess(); 
+
+        //ask user to input reciept number
+        String receipt_number = JOptionPane.showInputDialog(null, "Please enter the Ticket Number on the ticket you want to Refund\n" +
+        "NOTE: You will be charged a 15% admin fee if you are not a registered user", "Refund");
+
+        //check for registered user (15% admin fee)
+        if(receipt_number != null){
+            refund_process.modifyReciept(receipt_number, Boolean.parseBoolean(UserInfo[4]));
+            JOptionPane.showMessageDialog(null, "Your receipt has been turned into a credit", "Success");
+        }else{
+            JOptionPane.showMessageDialog(null, "You did not enter a valid receipt number. Please try again", "Error");
+        }
     }
 
     public void getUserInfo() {
-        // this.userInfo = UI.getUserInfo();
+        this.userInfo = UI.getUserInfo();
     }
 
-    public void registerUser() {
-        // userInfo.add("t");
-        // register_process = new RegisterProcess(/* userInfo */);
+    //checks database to see if user is registered 
+    public boolean checkRegUser(RegisteredUser ru) {
+        return DatabaseController.getOnlyInstance().isRegistered(ru);
     }
 }
