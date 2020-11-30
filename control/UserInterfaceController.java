@@ -24,10 +24,9 @@ public class UserInterfaceController {
         UI = new UserInterface(this);   
     }
 
-    // public ArrayList<String> getMovies() {
-
-    //     return (databaseController.getMovieNames());
-    // }
+    public ArrayList<String> getMovies() {
+         return (DatabaseController.getOnlyInstance().getMovieNames());
+    }
 
     public boolean setMovie(String movie) {
         selected_movie = movie_searcher.searchMovie(movie);
@@ -96,10 +95,10 @@ public class UserInterfaceController {
             }
 
             //send a email of the reciept to user 
-            // purchase_process.emailUser();
+            purchase_process.emailUser();
 
             //print reciept to the text area 
-            return purchase_process.getReceipt().toString();
+            return "A copy of the reciept has been emailed to "+userInfo.get(3)+"\n"+purchase_process.getReceipt().toString();
         }else{
             //pop up informing user to select a seat first 
             return "Cannot purchase a ticket. Please select a seat first";
@@ -116,7 +115,7 @@ public class UserInterfaceController {
 
         //check for registered user (15% admin fee)
         if(receipt_number != null){
-            refund_process.modifyReciept(receipt_number, Boolean.parseBoolean(userInfo.get(4)));
+            refund_process.modifyReciept(Integer.parseInt(receipt_number), Boolean.parseBoolean(userInfo.get(4)));
             JOptionPane.showMessageDialog(null, "Your receipt has been turned into a credit");
         }else{
             JOptionPane.showMessageDialog(null, "You did not enter a valid receipt number. Please try again");
@@ -143,8 +142,8 @@ public class UserInterfaceController {
             return;
         }else{
         //registers user 
-        RegisterProcess rp = new RegisterProcess(userInfo);
-        rp.addRegisteredUser();
+        register_process = new RegisterProcess(userInfo);
+        register_process.addRegisteredUser();
         
         //display user registered popup 
         JOptionPane.showMessageDialog(null, "You have successfully registered");

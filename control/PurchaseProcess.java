@@ -52,12 +52,7 @@ public class PurchaseProcess{
     //     }
      }
 
-    public void paymentAPI(){
-        //ask UI to generate a popup to confirm payment 
-    }
-
     public Receipt getReceipt(){
         return new_receipt;
     }
-    //leaving this comment here so this doesnt duplicate itself!!! !!!
 }
