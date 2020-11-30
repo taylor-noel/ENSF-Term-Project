@@ -136,9 +136,18 @@ public class UserInterfaceController {
     public void registerUser(){
 
         //asks user to confirm if they want to register 
-        JOptionPane.showConfirmDialog(null, "Press Ok to confirm your registrations", "User Registeration", JOptionPane.CANCEL_OPTION);
-
+        if(JOptionPane.showConfirmDialog(null, "Press Ok to confirm your registrations", "User Registeration", JOptionPane.CANCEL_OPTION) == JOptionPane.CANCEL_OPTION){
+            //display cancellation message
+            JOptionPane.showMessageDialog(null, "You have cancelled User Registeration");
+            //cancels the process
+            return;
+        }else{
         //registers user 
         RegisterProcess rp = new RegisterProcess(userInfo);
+        rp.addRegisteredUser();
+        
+        //display user registered popup 
+        JOptionPane.showMessageDialog(null, "You have successfully registered");
+        }
     }
 }
