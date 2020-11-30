@@ -7,57 +7,88 @@ import java.awt.event.ActionEvent;
 
 public class SeatView extends JFrame {
 
-    static final long serialVersionUID = 1;
-    JPanel seatDisp;
-    JLabel screen;
+    private static final long serialVersionUID = 1L;
+    JPanel seatDisp, screen;
     JFrame seats;
-    String selected;
+
     private ArrayList<String> seatsUI;
+
+    String selected;
     String[] st;
 
-    public SeatView(/* ArrayList<String> seatInfo */) {
+    public SeatView(ArrayList<String> seatInfo) {
         try {
-            seatsUI = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                seatsUI.add(i + " a 150.0 true");
-            }
-            for (int i = 0; i < 10; i++) {
-                seatsUI.add(i + " b 150.0 false");
-            }
-
+            seatsUI = seatInfo;
             seats = new JFrame();
             seats.setBackground(Color.BLACK);
             seats.setSize(750, 600);
             seats.setTitle("Select a suitable seat");
+            seats.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
             seatDisp = new JPanel();
+
             seatDisp.setBackground(Color.GRAY);
             seatDisp.setAlignmentX(CENTER_ALIGNMENT);
             seatDisp.setAlignmentY(CENTER_ALIGNMENT);
 
-            screen = new JLabel("Screen is here");
-            screen.setBackground(Color.BLACK);
+            screen = new JPanel();
+            screen.setBackground(Color.CYAN);
             screen.setForeground(Color.WHITE);
             screen.setAlignmentX(CENTER_ALIGNMENT);
             screen.setAlignmentY(CENTER_ALIGNMENT);
+            screen.add(new JLabel("Screen is here!! ", 0));
+
+            JPanel exit = new JPanel();
+            exit.setBackground(Color.YELLOW);
+            exit.setAlignmentX(CENTER_ALIGNMENT);
+            exit.setAlignmentY(CENTER_ALIGNMENT);
+            exit.add(new JLabel("Doors!!", 0));
 
             // seatsUI=seatInfo;
             seats.add("Center", seatDisp);
             seats.add("North", screen);
+            seats.add("South", exit);
             seats.setVisible(true);
             makeSeats();
+            return;
         } catch (Exception e) {
-            // skip
+            e.printStackTrace();
         }
     }
 
     public void makeSeats() throws Exception {
         int i = 0;
-        st = seatsUI.get(i).split(" ");
-        String row = st[0];
+        String row;
+
+        int rowN = 0;
+        char colN = 'a';
+
+        for (String s : seatsUI) {
+            st = seatsUI.get(i).split(" ");
+            int r = Integer.parseInt(st[0]);
+            if (rowN < r) {
+                rowN = r;
+            }
+            if (colN < st[1].charAt(0)) {
+                colN = st[1].charAt(0);
+            }
+        }
+
+        int colNp = colN - 'a' + 1;
+
+        seatDisp.setLayout(new GridLayout(rowN, colNp));
+
+        JPanel jp = new JPanel();
 
         while (i < seatsUI.size()) {
+            st = seatsUI.get(i).split(" ");
             row = st[0];
+
+            if (row.equals("0")) {
+                jp = new JPanel();
+                seatDisp.add(jp);
+            }
+
             JButton jb = new JButton(row + st[1]);
             if (st[3].equals("true")) {
                 jb.setBackground(Color.GREEN);
@@ -66,22 +97,28 @@ public class SeatView extends JFrame {
             }
 
             jb.addActionListener((ActionEvent e) -> {
-                selected = (jb.getText());
-                System.out.println(selected);
-            });
-            seatDisp.add(jb);
+                if (Color.RED == jb.getBackground()) {
+                    JOptionPane.showMessageDialog(null, "Seat Unavailable");
+                } else if (Color.GREEN == jb.getBackground()) {
+                    selected = (jb.getText());
+                    int conf = JOptionPane.showConfirmDialog(null,
+                            "You have selected " + selected
+                                    + " as your seat. Press OK to purchase, Cancel to choose seat again",
+                            "Confirm", JOptionPane.OK_CANCEL_OPTION);
 
+                    if (conf == JOptionPane.OK_OPTION) {
+                        return;
+                    }
+                }
+            });
+
+            jp.add(jb);
             i++;
-            st = seatsUI.get(i).split(" ");
         }
     }
 
     public String getSeat() {
+        System.out.println(selected + " in seatV");
         return selected;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("HI");
-        new SeatView();
     }
 }

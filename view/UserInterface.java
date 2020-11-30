@@ -97,30 +97,31 @@ public class UserInterface extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
 
-        //creates a registered used class  
-        RegisteredUser ru = new RegisteredUser(userInfo[0], userInfo[1], userInfo[2], userInfo[3], userInfo[4], true);
+        // creates a registered used class
+        // RegisteredUser ru = new RegisteredUser(userInfo[0], userInfo[1], userInfo[2],
+        // userInfo[3], userInfo[4], true);
 
-        //checks with database to see if user is actually registered 
-        boolean registered = control.checkRegUser(ru);
+        // checks with database to see if user is actually registered
+        // boolean registered = control.checkRegUser(ru);
 
-        //if registered
-        if(registered){
-            //set userInfo[5] = true
-            userInfo[5] = "true";
-            //continue to menu
-        }else{    
-        //if not registered
+        // if registered
+        // if(registered){
+        // set userInfo[5] = true
+        // userInfo[5] = "true";
+        // continue to menu
+        // }else{
+        // if not registered
         try {
-            //display "Would you like to register?" message
-            if (JOptionPane.showConfirmDialog(null, "Would you like to register?", "Register Prompy", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    JOptionPane.showMessageDialog(null, "Please press the register button at bottom of the screen...");
-                }
-            } catch (Exception e) {
-            e.printStackTrace();
+            // display "Would you like to register?" message
+            if (JOptionPane.showConfirmDialog(null, "Would you like to register?", "Register Prompy",
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(null, "Please press the register button at bottom of the screen...");
             }
-            userInfo.add("false");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        
+        userInfo.add("false");
+
         return userInfo;
     }
 
@@ -183,16 +184,26 @@ public class UserInterface extends JFrame {
                 miscB.setText("Select a Seat");
                 miscFlag = 'f';
             } else if (miscFlag == 'f') {
-                SeatView sv = new SeatView(/*control.getAllSeats()*/);
-                sv.getSeat();
+
+                ArrayList<String> testSeats = new ArrayList<>();
+                for (int i = 0; i < 10; i++) {
+                    testSeats.add(i + " a 150.0 true");
+                }
+                for (int i = 0; i < 10; i++) {
+                    testSeats.add(i + " b 150.0 false");
+                }
+
+                SeatView sv = new SeatView(testSeats/* control.getAllSeats() */);
+
+                System.out.println(sv.getSeat());
             }
         });
         purchase_ticket.addActionListener((ActionEvent e) -> {
-            String message = control.purchaseTicket();
-            ta.setText(message);
+            // String message = control.purchaseTicket();
+            // ta.setText(message);
         });
         refund_ticket.addActionListener((ActionEvent e) -> {
-            control.refundTicket();
+            // control.refundTicket();
         });
         register.addActionListener((ActionEvent e) -> {
             // control.registerUser();
