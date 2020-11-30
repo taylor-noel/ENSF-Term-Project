@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 //import control.UserInterfaceController;
 
+import control.UserInterfaceController;
+
 public class UserInterface extends JFrame {
     JButton select_movie, miscB, purchase_ticket, refund_ticket, register;
     JLabel title_label;
@@ -16,11 +18,11 @@ public class UserInterface extends JFrame {
 
     char miscFlag; // flag to determine misc button status
 
-    // UserInterfaceController control;
+    UserInterfaceController control;
 
-    public UserInterface(/* TEST UserInterfaceController control */) {
+    public UserInterface(UserInterfaceController control) {
         try {
-            // TEST this.control = control;
+            this.control = control;
 
             // Creating Button Panel
             getButtonPanel();
@@ -45,10 +47,12 @@ public class UserInterface extends JFrame {
             setTitle("Movie Registration Application");
 
             // getting user information before starting app
-            // TEST control.getUserInfo();
+            control.getUserInfo();
+
+            /*
             for (String s : getUserInfo())
                 System.out.println(s);
-
+            */
             browseAllMovies();
 
         } catch (Exception e) {
@@ -199,14 +203,16 @@ public class UserInterface extends JFrame {
             }
         });
         purchase_ticket.addActionListener((ActionEvent e) -> {
-            // String message = control.purchaseTicket();
-            // ta.setText(message);
+            String message = control.purchaseTicket();
+            ta.setText(message);
         });
         refund_ticket.addActionListener((ActionEvent e) -> {
-            // control.refundTicket();
+            control.refundTicket();
         });
         register.addActionListener((ActionEvent e) -> {
-            // control.registerUser();
+            control.registerUser();
+
+            //removed the register user button after the user has registered 
             register.setVisible(false);
         });
 

@@ -116,10 +116,10 @@ public class UserInterfaceController {
 
         //check for registered user (15% admin fee)
         if(receipt_number != null){
-            refund_process.modifyReciept(receipt_number, Boolean.parseBoolean(UserInfo[4]));
-            JOptionPane.showMessageDialog(null, "Your receipt has been turned into a credit", "Success");
+            refund_process.modifyReciept(receipt_number, Boolean.parseBoolean(userInfo.get(4)));
+            JOptionPane.showMessageDialog(null, "Your receipt has been turned into a credit");
         }else{
-            JOptionPane.showMessageDialog(null, "You did not enter a valid receipt number. Please try again", "Error");
+            JOptionPane.showMessageDialog(null, "You did not enter a valid receipt number. Please try again");
         }
     }
 
@@ -130,5 +130,15 @@ public class UserInterfaceController {
     //checks database to see if user is registered 
     public boolean checkRegUser(RegisteredUser ru) {
         return DatabaseController.getOnlyInstance().isRegistered(ru);
+    }
+
+    //adds the user as a registered user 
+    public void registerUser(){
+
+        //asks user to confirm if they want to register 
+        JOptionPane.showConfirmDialog(null, "Press Ok to confirm your registrations", "User Registeration", JOptionPane.CANCEL_OPTION);
+
+        //registers user 
+        RegisterProcess rp = new RegisterProcess(userInfo);
     }
 }
