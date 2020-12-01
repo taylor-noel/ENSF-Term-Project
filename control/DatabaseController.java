@@ -2,9 +2,6 @@ package control;
 
 import model.Database;
 import model.Movie;
-import model.Showtime;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class DatabaseController {
@@ -44,6 +41,10 @@ public class DatabaseController {
             receipt.applyAdminFee();
         saveDatabase();
         return true;
+    }
+
+    public Receipt getTicket(int ticketNum) {
+        return database.findTicket(ticketNum);
     }
 
     public void addRegUser(RegisteredUser user) {

@@ -9,11 +9,14 @@ public class Showtime {
     private String date;
     private ArrayList<Seat> seats;
 
-    public Showtime(String s, String e, String d, ArrayList<Seat> seat, Movie m) {
+    public Showtime(String s, String e, String d, ArrayList<Seat> st, Movie m) {
         start_time = s;
         end_time = e;
         date = d;
-        seats = seat;
+        seats = new ArrayList<>();
+        for (Seat seat : st) {
+            seats.add(new Seat(seat.getRow(), seat.getLetter(), seat.getPrice(), true));
+        }
         movie = m;
     }
 

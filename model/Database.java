@@ -374,7 +374,8 @@ public class Database {
 
         Showtime showtime = null;
         for (Showtime s : theatre.getShowtimes()) {
-            if ((s.getStartTime() + " to " + s.getEndTime()).equals(r.getShowtime())) {
+            if ((s.getStartTime() + " to " + s.getEndTime()).equals(r.getShowtime())
+                    && s.getDate().equals(r.getDate())) {
                 showtime = s;
                 break;
             }

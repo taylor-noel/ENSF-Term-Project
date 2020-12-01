@@ -96,6 +96,54 @@ Tickets:
     200.0
     0
 }
+{
+    {
+        test
+        user
+        asd
+        test@user.com
+    }
+    1273489
+    Paul Blart, Mall Cop 2
+    Cinemax
+    2:00 am to 6:00 am
+    12/4/2020
+    6d
+    225.0
+    0
+}
+{
+    {
+        test
+        user
+        asd
+        test@user.com
+    }
+    1273490
+    Paul Blart, Mall Cop 2
+    Cinemax
+    2:00 am to 6:00 am
+    12/6/2020
+    6a
+    150.0
+    0
+}
+{
+    {
+        punit
+        unreg
+        qwert
+        asdf@asdf.com
+    }
+    1273491
+    Paul Blart, Mall Cop 2
+    Cinemax
+    2:00 am to 6:00 am
+    12/4/2020
+    9e
+    250.0
+    0
+}
 
 Registered Users:
 {
@@ -124,4 +172,4 @@ Registered Users:
 }
 
 Current Ticket Number:
-1273488
+1273492

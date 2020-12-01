@@ -69,6 +69,7 @@ public class Receipt {
 
     public String toString() {
         return "\nUser : " + buyer + "\n\nNumber : " + ticketNumber + "\nMovie : " + movie + "\nTheatre : " + theatre
-                + "\nShowtime : " + showtime + "\nSeat : " + seat + "\nPrice : " + price + "\nCredit : " + isCredit;
+                + "\nShowtime : " + showtime + " on " + date + "\nSeat : " + seat + "\nPrice : " + price + "\nCredit : "
+                + isCredit;
     }
 }

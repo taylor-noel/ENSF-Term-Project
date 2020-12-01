@@ -4,8 +4,6 @@ import model.*;
 import view.*;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 public class UserInterfaceController {
     private UserInterface UI;
     private MovieSearcher movie_searcher;

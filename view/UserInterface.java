@@ -218,7 +218,8 @@ public class UserInterface extends JFrame {
                 if (control.refundTicket(Integer.parseInt(receipt_number))) {
                     JOptionPane.showMessageDialog(null, "Your receipt has been turned into a credit");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Your receipt could not be found");
+                    JOptionPane.showMessageDialog(null,
+                            "Your receipt could not be found or the Showtime is in less than 72 hours (3 days)\nRefunds can only occur 3 days before showtime");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "You did not enter a valid receipt number. Please try again");
