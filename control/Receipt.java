@@ -6,16 +6,18 @@ public class Receipt {
     private String movie;
     private String theatre;
     private String showtime;
+    private String date;
     private String seat;
     private double price;
     private boolean isCredit;
 
-    public Receipt(User b, int num, String m, String t, String show, String s, double p, boolean credit) {
+    public Receipt(User b, int num, String m, String t, String show, String d, String s, double p, boolean credit) {
         buyer = b;
         ticketNumber = num;
         movie = m;
         theatre = t;
         showtime = show;
+        date = d;
         seat = s;
         price = p;
         isCredit = credit;
@@ -43,6 +45,10 @@ public class Receipt {
 
     public String getShowtime() {
         return showtime;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public String getSeat() {

@@ -87,7 +87,7 @@ public class SeatView extends JFrame {
             st = seatsUI.get(i).split(" ");
             row = st[0];
 
-            if (row.equals("0")) {
+            if (row.equals("1")) {
                 jp = new JPanel();
                 seatDisp.add(jp);
             }

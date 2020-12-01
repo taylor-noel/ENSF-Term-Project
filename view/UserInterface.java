@@ -199,7 +199,7 @@ public class UserInterface extends JFrame {
                 }
             } else if (miscFlag == 'f') {
                 SeatView sv = new SeatView(control.getAllSeats(), this);
-                System.out.println(sv.getSeat());
+                // System.out.println(sv.getSeat());
             }
         });
 

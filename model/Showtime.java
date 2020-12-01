@@ -6,20 +6,27 @@ public class Showtime {
     Movie movie;
     private String start_time;
     private String end_time;
+    private String date;
     private ArrayList<Seat> seats;
 
-    public Showtime(String s, String e, ArrayList<Seat> seat, Movie m) {
+    public Showtime(String s, String e, String d, ArrayList<Seat> seat, Movie m) {
         start_time = s;
         end_time = e;
+        date = d;
         seats = seat;
         movie = m;
     }
 
-    public Showtime(String s, String e, Movie m) {
+    public Showtime(String s, String e, String d, Movie m) {
         start_time = s;
         end_time = e;
+        date = d;
         movie = m;
         seats = new ArrayList<Seat>();
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public void addSeat(Seat s) {
@@ -53,6 +60,6 @@ public class Showtime {
     }
 
     public String toString() {
-        return "Showtime : " + start_time + " to " + end_time + ",\t Movie : " + movie.toString();
+        return "Showtime : " + start_time + " to " + end_time + "\tDate : " + date + ",\t Movie : " + movie.toString();
     }
 }

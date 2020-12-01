@@ -15,8 +15,10 @@ public class PurchaseProcess {
     public void createReceipt() {
         User current_user = new User(userInfo.get(0), userInfo.get(1), userInfo.get(2), userInfo.get(3));
         int ticketNumber = DatabaseController.getOnlyInstance().getTicketNumber();
+
+        // user, ticketNo, movie, theatre, showtime, date, seat, price, isCredit
         new_receipt = new Receipt(current_user, ticketNumber, ticketInfo.get(0), ticketInfo.get(1), ticketInfo.get(2),
-                ticketInfo.get(3), Double.parseDouble(ticketInfo.get(4)), false);
+                ticketInfo.get(3), ticketInfo.get(4), Double.parseDouble(ticketInfo.get(5)), false);
     }
 
     public void addReciept() {
