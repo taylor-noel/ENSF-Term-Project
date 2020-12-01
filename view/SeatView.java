@@ -18,7 +18,7 @@ public class SeatView extends JFrame {
     String selected;
     String[] st;
 
-    public SeatView(ArrayList<String> seatInfo, UserInterface ui){
+    public SeatView(ArrayList<String> seatInfo, UserInterface ui) {
         UI = ui;
         try {
             seatsUI = seatInfo;
@@ -99,7 +99,23 @@ public class SeatView extends JFrame {
                 jb.setBackground(Color.RED);
             }
 
+            String text = jb.getText();
+            jb.addMouseListener(new java.awt.event.MouseAdapter() {
+                String price = st[2];
+
+                @Override
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    jb.setText(price);
+                }
+
+                @Override
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    jb.setText(text);
+                }
+            });
+
             jb.addActionListener((ActionEvent e) -> {
+                jb.setText(text);
                 if (Color.RED == jb.getBackground()) {
                     JOptionPane.showMessageDialog(null, "Seat Unavailable");
                 } else if (Color.GREEN == jb.getBackground()) {
@@ -110,7 +126,7 @@ public class SeatView extends JFrame {
                             "Confirm", JOptionPane.OK_CANCEL_OPTION);
 
                     if (conf == JOptionPane.OK_OPTION) {
-                        //send selected option back to UI controller
+                        // send selected option back to UI controller
                         UI.purchaseTicketUI(selected);
                         seats.dispose();
                         return;
@@ -124,7 +140,7 @@ public class SeatView extends JFrame {
     }
 
     public String getSeat() {
-        //System.out.println(selected + " in seatV");
+        // System.out.println(selected + " in seatV");
         return selected;
     }
 }

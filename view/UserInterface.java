@@ -18,6 +18,7 @@ public class UserInterface extends JFrame {
     JTextArea ta;
 
     char miscFlag; // flag to determine misc button status
+    boolean firstCheck;
 
     UserInterfaceController control;
 
@@ -47,13 +48,13 @@ public class UserInterface extends JFrame {
             setVisible(true);
             setTitle("Movie Registration Application");
 
+            firstCheck = true;
             // getting user information before starting app
             // control.getUserInfo();
 
             /*
-            for (String s : getUserInfo())
-                System.out.println(s);
-            */
+             * for (String s : getUserInfo()) System.out.println(s);
+             */
             browseAllMovies();
 
         } catch (Exception e) {
@@ -103,28 +104,31 @@ public class UserInterface extends JFrame {
         }
 
         // creates a registered used class
-        RegisteredUser ru = new RegisteredUser(userInfo.get(0), userInfo.get(1), userInfo.get(2),
-        userInfo.get(3), true);
+        RegisteredUser ru = new RegisteredUser(userInfo.get(0), userInfo.get(1), userInfo.get(2), userInfo.get(3),
+                true);
 
         // checks with database to see if user is actually registered
         boolean registered = control.checkRegUser(ru);
 
         // if registered
-        if(registered){
-        //set userInfo[5] = true
-        userInfo.add("true");
-        // continue to menu
-        }else{
-        
+        if (registered) {
+            // set userInfo[5] = true
+            userInfo.add("true");
+            register.setVisible(false);
+            // continue to menu
+        } else {
+
             userInfo.add("false");
             // if not registered
             try {
                 // display "Would you like to register?" message
-                if (JOptionPane.showConfirmDialog(null, "Would you like to register?", "Register Prompy", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                if (JOptionPane.showConfirmDialog(null, "Would you like to register?", "Register Prompy",
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     JOptionPane.showMessageDialog(null, "Please press the register button at bottom of the screen...");
                 }
             } catch (Exception e) {
-            e.printStackTrace(); }
+                e.printStackTrace();
+            }
         }
 
         return userInfo;
@@ -171,22 +175,28 @@ public class UserInterface extends JFrame {
 
         // Adding Button Listeners
         select_movie.addActionListener((ActionEvent e) -> {
+            if (firstCheck == false) {
+                miscB.setText("Select Theatre");
+                miscFlag = 't';
+                browseAllMovies();
+            }
             searchMov();
+            firstCheck = false;
         });
         miscB.addActionListener((ActionEvent e) -> {
             if (miscFlag == 't') {
                 chooseTheatre();
-                if(control.getTheatre()){
+                if (control.getTheatre()) {
                     showShowTimes();
                     miscB.setText("Select Showtime");
                     miscFlag = 's';
                 }
             } else if (miscFlag == 's') {
                 chooseShowTimes();
-                if(control.getShowtime()){
+                if (control.getShowtime()) {
                     miscB.setText("Select a Seat");
                     miscFlag = 'f';
-                 }
+                }
             } else if (miscFlag == 'f') {
                 SeatView sv = new SeatView(control.getAllSeats(), this);
                 System.out.println(sv.getSeat());
@@ -195,40 +205,43 @@ public class UserInterface extends JFrame {
 
         refund_ticket.addActionListener((ActionEvent e) -> {
             /**
-             * migrated from controller to UI 
+             * migrated from controller to UI
              * 
-             * NOTES: Does not check if reciept exists in database...needs function in database controller?
+             * NOTES: Does not check if reciept exists in database...needs function in
+             * database controller?
              */
-            //ask user to input reciept number
-            String receipt_number = JOptionPane.showInputDialog(null, "Please enter the Ticket Number on the ticket you want to Refund\n" +
-            "NOTE: You will be charged a 15% admin fee if you are not a registered user");
-            if(receipt_number != null){
-                if(control.refundTicket(Integer.parseInt(receipt_number))){
+            // ask user to input reciept number
+            String receipt_number = JOptionPane.showInputDialog(null,
+                    "Please enter the Ticket Number on the ticket you want to Refund\n"
+                            + "NOTE: You will be charged a 15% admin fee if you are not a registered user");
+            if (receipt_number != null) {
+                if (control.refundTicket(Integer.parseInt(receipt_number))) {
                     JOptionPane.showMessageDialog(null, "Your receipt has been turned into a credit");
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Your receipt could not be found");
-                } 
-            }else{
+                }
+            } else {
                 JOptionPane.showMessageDialog(null, "You did not enter a valid receipt number. Please try again");
             }
         });
         register.addActionListener((ActionEvent e) -> {
             /**
-             * migrated from controller to UI 
+             * migrated from controller to UI
              */
 
-            //asks user to confirm if they want to register 
-            if(JOptionPane.showConfirmDialog(null, "Press Ok to confirm your registrations", "User Registeration", JOptionPane.CANCEL_OPTION) == JOptionPane.CANCEL_OPTION){
-                //display cancellation message
+            // asks user to confirm if they want to register
+            if (JOptionPane.showConfirmDialog(null, "Press Ok to confirm your registrations", "User Registeration",
+                    JOptionPane.CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) {
+                // display cancellation message
                 JOptionPane.showMessageDialog(null, "You have cancelled User Registeration");
-                //cancels the process
+                // cancels the process
                 return;
-             }else{
-                //asks control to register user 
+            } else {
+                // asks control to register user
                 control.registerUser();
-                //removed the register user button after the user has registered 
+                // removed the register user button after the user has registered
                 register.setVisible(false);
-                //display user registered popup 
+                // display user registered popup
                 JOptionPane.showMessageDialog(null, "You have successfully registered");
             }
         });
@@ -242,22 +255,25 @@ public class UserInterface extends JFrame {
     }
 
     public void chooseShowTimes() {
-        int sTime=0;
-        try{ sTime = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the showTime:")); }
-        catch( Exception e ){ sTime = -1; }
+        int sTime = 0;
+        try {
+            sTime = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the showTime:"));
+        } catch (Exception e) {
+            sTime = -1;
+        }
         System.out.println(sTime);
 
-        if(!control.setShowTime(sTime)){
+        if (!control.setShowTime(sTime - 1)) {
             JOptionPane.showMessageDialog(null, "Invalid Showtime selection");
             return;
-        }else
-            ta.setText("You have selected " + control.getShowtimes().get(sTime).toString());
+        } else
+            ta.setText("You have selected \n\n" + control.getShowtimes().get(sTime - 1).toString());
     }
 
     public void showShowTimes() {
         ArrayList<String> sTimes = control.getShowtimes();
 
-        int i = 0;
+        int i = 1;
         for (String s : sTimes) {
             ta.append(i + " : ");
             ta.append(s);
@@ -273,9 +289,9 @@ public class UserInterface extends JFrame {
         String tName = "";
         tName = JOptionPane.showInputDialog(null, "Please enter the Theater's name, in which you want to watch movie:");
         System.out.println(tName);
-        if(control.setTheatre(tName)){
+        if (control.setTheatre(tName)) {
             ta.setText("You have selected " + tName + ", \n\t Following are the available showtimes... \n\n\n\t");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Invalid Theatre selection");
         }
     }
@@ -299,8 +315,8 @@ public class UserInterface extends JFrame {
             select_movie.setText("Select a new Movie");
 
             ta.setText("You have selected to watch:\n\n\n\t" + movName
-                + "\n\n\n\nPlease choose from following theatres...\n\n\t");
-             //this should only work if Movie is selected 
+                    + "\n\n\n\nPlease choose from following theatres...\n\n\t");
+            // this should only work if Movie is selected
             showTheatres();
 
             // Set 2nd button to show all theatres
@@ -323,17 +339,17 @@ public class UserInterface extends JFrame {
         }
     }
 
-            
-    public void purchaseTicketUI(String selected){
-        //popup for confirming purchase 
-        int confirmed = JOptionPane.showConfirmDialog(null, "Confirm Purchase?", "User Login", JOptionPane.YES_NO_OPTION);
-        String message="";
+    public void purchaseTicketUI(String selected) {
+        // popup for confirming purchase
+        int confirmed = JOptionPane.showConfirmDialog(null, "Confirm Purchase?", "User Login",
+                JOptionPane.YES_NO_OPTION);
+        String message = "";
 
-        //if the user cancels
-        if(confirmed == JOptionPane.NO_OPTION){
-            //display cancel message 
+        // if the user cancels
+        if (confirmed == JOptionPane.NO_OPTION) {
+            // display cancel message
             message = "Payment has been cancelled";
-        }else if(confirmed == JOptionPane.YES_OPTION){
+        } else if (confirmed == JOptionPane.YES_OPTION) {
             control.setSeat(selected);
             message = control.purchaseTicket();
         }
@@ -372,8 +388,8 @@ public class UserInterface extends JFrame {
     }
 
     // public static void main(String[] args) {
-    //     System.out.println("HI");
-    //     // UserInterfaceController control = new UserInterfaceController();
-    //     new UserInterface();
+    // System.out.println("HI");
+    // // UserInterfaceController control = new UserInterfaceController();
+    // new UserInterface();
     // }
 }
