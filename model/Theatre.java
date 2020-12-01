@@ -43,7 +43,7 @@ public class Theatre{
     }
 
     public Showtime searchShowtime(int n){
-        if(n >= showtimes.size())
+        if(n >= showtimes.size() || n < 0)
             return null;
         return showtimes.get(n);
     }

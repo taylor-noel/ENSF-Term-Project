@@ -12,12 +12,14 @@ public class SeatSelector{
         movie = selectedMov;
     }
 
-    public void selectTheatre(String name){
+    public boolean selectTheatre(String name){
         theatre = movie.searchTheatre(name);
+        return theatre != null;
     }   
         
-    public void selectShowtime(int index){
+    public boolean selectShowtime(int index){
        showtime = theatre.searchShowtime(index);
+       return showtime != null;
     }
 
     public void selectSeat(ArrayList<String> s){

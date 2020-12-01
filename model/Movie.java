@@ -23,7 +23,7 @@ public class Movie {
 
     public Theatre searchTheatre(String name){
         for( Theatre t : theatres){
-            if(t.getName().equals(name))
+            if(t.getName().toLowerCase().equals(name.toLowerCase()))
                 return t;
         }
         return null;

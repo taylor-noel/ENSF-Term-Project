@@ -17,7 +17,7 @@ Movies:
                 0
                 b
                 150.0
-                1
+                0
             }
         }
     }
@@ -37,7 +37,7 @@ Movies:
                 0
                 b
                 150.0
-                1
+                0
             }
         }
     }
@@ -119,18 +119,33 @@ Tickets:
 }
 {
     {
-        a
-        b
-        c
-        d
+        ben
+        nielsen
+        under a bridge
+        littleb88888888@gmail.com
     }
-    1273484
+    1273483
     Paul Blart, Mall Cop 3
     Cinemax
     1:00 am to 3:00 am
     0b
     150.0
-    1
+    0
+}
+{
+    {
+        ben
+        nielsen
+        under abridge
+        littleb88888888@gmail.com
+    }
+    1273484
+    Paul Blart, Mall Cop 3
+    Paul Blart memorial theatre
+    2:00 am to 6:00 am
+    0b
+    150.0
+    0
 }
 
 Registered Users:
@@ -145,12 +160,6 @@ Registered Users:
     Blart
     The Mall
     Paul_Blart@themall.ca
-}
-{
-    a
-    b
-    c
-    d
 }
 
 Current Ticket Number:

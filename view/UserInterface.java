@@ -172,26 +172,23 @@ public class UserInterface extends JFrame {
         // Adding Button Listeners
         select_movie.addActionListener((ActionEvent e) -> {
             searchMov();
-            showTheatres();
-            // Set 2nd button to show all theatres
-            miscB.setText("Select movie's Theatre");
-            miscFlag = 't';
-            miscB.setVisible(true);
         });
         miscB.addActionListener((ActionEvent e) -> {
             if (miscFlag == 't') {
                 chooseTheatre();
-                showShowTimes();
-                miscB.setText("Select Showtime");
-                miscFlag = 's';
+                if(control.getTheatre()){
+                    showShowTimes();
+                    miscB.setText("Select Showtime");
+                    miscFlag = 's';
+                }
             } else if (miscFlag == 's') {
                 chooseShowTimes();
-                miscB.setText("Select a Seat");
-                miscFlag = 'f';
+                if(control.getShowtime()){
+                    miscB.setText("Select a Seat");
+                    miscFlag = 'f';
+                 }
             } else if (miscFlag == 'f') {
                 SeatView sv = new SeatView(control.getAllSeats(), this);
-                //sv.dispose();
-
                 System.out.println(sv.getSeat());
             }
         });
@@ -247,28 +244,19 @@ public class UserInterface extends JFrame {
     public void chooseShowTimes() {
         int sTime=0;
         try{ sTime = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the showTime:")); }
-        catch( Exception e ){ e.printStackTrace(); }
+        catch( Exception e ){ sTime = -1; }
         System.out.println(sTime);
-        // control.setTheatre(tName);
-        int i = 0;
-        while (i < sTime) {
-            i++;
-        }
 
-        // control.setShowTime(control.getShowtimes().get(i-1));
-        control.setShowTime(sTime);
-
-        ta.setText("You have selected " + control.getShowtimes().get(sTime).toString());
+        if(!control.setShowTime(sTime)){
+            JOptionPane.showMessageDialog(null, "Invalid Showtime selection");
+            return;
+        }else
+            ta.setText("You have selected " + control.getShowtimes().get(sTime).toString());
     }
 
     public void showShowTimes() {
         ArrayList<String> sTimes = control.getShowtimes();
 
-        // for testing
-        // ArrayList<String> sTimes = new ArrayList<>();
-        // sTimes.add("ST 1");
-        // sTimes.add("sT 2");
-        // upto here
         int i = 0;
         for (String s : sTimes) {
             ta.append(i + " : ");
@@ -285,9 +273,11 @@ public class UserInterface extends JFrame {
         String tName = "";
         tName = JOptionPane.showInputDialog(null, "Please enter the Theater's name, in which you want to watch movie:");
         System.out.println(tName);
-        control.setTheatre(tName);
-
-        ta.setText("You have selected " + tName + ", \n\t Following are the available showtimes... \n\n\n\t");
+        if(control.setTheatre(tName)){
+            ta.setText("You have selected " + tName + ", \n\t Following are the available showtimes... \n\n\n\t");
+        }else{
+            JOptionPane.showMessageDialog(null, "Invalid Theatre selection");
+        }
     }
 
     /**
@@ -310,7 +300,14 @@ public class UserInterface extends JFrame {
 
             ta.setText("You have selected to watch:\n\n\n\t" + movName
                 + "\n\n\n\nPlease choose from following theatres...\n\n\t");
-            }
+             //this should only work if Movie is selected 
+            showTheatres();
+
+            // Set 2nd button to show all theatres
+            miscB.setText("Select movie's Theatre");
+            miscFlag = 't';
+            miscB.setVisible(true);
+        }
     }
 
     /**
@@ -319,12 +316,6 @@ public class UserInterface extends JFrame {
     public void showTheatres() {
         ArrayList<String> tAvail = control.getTheatres();
         String tName = "";
-
-        // for testing
-        // ArrayList<String> tAvail = new ArrayList<>();
-        // tAvail.add("Theatre 1");
-        // tAvail.add("Theatre 2");
-        // upto here
 
         for (String t : tAvail) {
             ta.append(t);

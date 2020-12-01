@@ -50,8 +50,8 @@ public class UserInterfaceController {
         return tNames;
     }
 
-    public void setTheatre(String theatreName) {
-        seat_selector.selectTheatre(theatreName);
+    public boolean setTheatre(String theatreName) {
+        return seat_selector.selectTheatre(theatreName);
     }
 
     public ArrayList<String> getShowtimes() {
@@ -72,8 +72,8 @@ public class UserInterfaceController {
         return seatInfo;
     }
 
-    public void setShowTime(int index) {
-        seat_selector.selectShowtime(index);
+    public boolean setShowTime(int index) {
+        return seat_selector.selectShowtime(index);
     }
 
     public boolean setSeat(ArrayList<String> seat) {
@@ -134,6 +134,15 @@ public class UserInterfaceController {
         register_process = new RegisterProcess(userInfo);
         register_process.addRegisteredUser();
         userInfo.set(4,"true");
+    }
+
+    //return the selected theatre is seat_selector 
+    public boolean getTheatre(){
+        return seat_selector.getSelectedTheatre() != null;
+    }
+
+    public boolean getShowtime(){
+        return seat_selector.getSelectedShowTime() != null;
     }
 
     public static void main(String[] args) {

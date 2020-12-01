@@ -1,9 +1,9 @@
 package control;
 import java.util.ArrayList;
-// import java.util.*;
-// import javax.mail.*;
-// import javax.mail.internet.*;
-// import javax.activation.*;
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
 
 public class PurchaseProcess{
     private ArrayList <String> ticketInfo;
@@ -28,28 +28,46 @@ public class PurchaseProcess{
     public void emailUser(){
         String email = userInfo.get(3);
         String toSend = "Thank you for purchasing a ticket! This is a copy of your receipt: \n" + new_receipt.toString(); 
-        String from = "kalikalikalikali@gmail.com"; 
+        String from = "moviereg480@gmail.com"; 
         String host = "localhost";
 
-        // Properties properties = System.getProperties();
-        // properties.setProperty("mail.smtp.host", host);
+        /*
+        Properties properties = System.getProperties();
+        properties.setProperty("mail.smtp.host", host);
 
-        // Session session = Session.getDefaultInstance(properties);
+        Session session = Session.getDefaultInstance(properties);
+        */
 
-        // try{
-        //     MimeMessage message = new MimeMessage(session);
-        //     message.setFrom(new InternetAddress(from));
+        Properties properties = new Properties();
+        properties.put("mail.transport.protocol","smtp");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "25");
+        properties.put("mail.smtp.auth", "true");
 
-        //     message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+        Authenticator auth = new Authenticator(){
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication("moviereg480@gmail.com", "ensfensf");
+            }
+        };
 
-        //     message.setSubject("Movie Receipt");
-        //     message.setText(toSend);
+        Session session = Session.getDefaultInstance(properties, auth);
 
-        //     Transport.send(message);
+        try{
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
 
-        // }catch (MessagingException mex){
-        //     mex.printStackTrace();
-        // }
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+
+            message.setSubject("Movie Receipt");
+            message.setText(toSend);
+
+            Transport.send(message);
+
+            System.out.println("EMAIL SENT");
+
+        }catch (MessagingException mex){
+            mex.printStackTrace();
+        }
      }
 
     public Receipt getReceipt(){

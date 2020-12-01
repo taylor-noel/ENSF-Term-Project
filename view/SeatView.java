@@ -112,7 +112,6 @@ public class SeatView extends JFrame {
                     if (conf == JOptionPane.OK_OPTION) {
                         //send selected option back to UI controller
                         UI.purchaseTicketUI(selected);
-
                         seats.dispose();
                         return;
                     }
@@ -125,7 +124,7 @@ public class SeatView extends JFrame {
     }
 
     public String getSeat() {
-        System.out.println(selected + " in seatV");
+        //System.out.println(selected + " in seatV");
         return selected;
     }
 }
