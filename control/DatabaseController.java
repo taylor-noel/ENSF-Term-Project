@@ -1,11 +1,19 @@
 package control;
 import model.Database;
 import model.Movie;
+import model.Showtime;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class DatabaseController{
     private Database database;
     private static DatabaseController onlyInstance;
+
+    DatabaseController(){
+        try{ database = new Database("model/data.txt"); }
+        catch(IOException e){ System.out.println("Error reading from database" + e.getMessage()); }
+    }
 
     public static DatabaseController getOnlyInstance(){
         if(onlyInstance == null)
@@ -19,17 +27,24 @@ public class DatabaseController{
 
     public void addTicket(Receipt ticket){
         database.getTicket().add(ticket);
+        saveDatabase();
     }
 
-    public void modifyTicket(int ticketNum, boolean registered){
+    public boolean modifyTicket(int ticketNum, boolean registered){
         Receipt receipt = database.findTicket(ticketNum);
+        if(receipt == null)
+            return false;
         receipt.setCreditTrue();
+        database.openUpSeat(receipt);
         if(!registered)
             receipt.applyAdminFee();
+        saveDatabase();
+        return true;
     }
 
     public void addRegUser(RegisteredUser user){
         database.getUsers().add(user);
+        saveDatabase();
     }
 
     public ArrayList<String> getMovieNames(){

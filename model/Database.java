@@ -19,7 +19,8 @@ public class Database{
 
     Database(){}
 
-    Database(String filepath) throws IOException
+    /**parses data fropm file into data mambers */
+    public Database(String filepath) throws IOException
     {
         path = filepath;
         // declare a new reader to read from databade file
@@ -82,6 +83,7 @@ public class Database{
             line = readItem();
         }
 
+        //read all stored tickets
         while(!line.equals("Tickets:"))
             line = readItem();
 
@@ -97,6 +99,7 @@ public class Database{
             line = readItem();
         }
 
+        //read all registered users
         while(!line.equals("Registered Users:"))
             line = readItem();
 
@@ -108,6 +111,7 @@ public class Database{
             line = readItem();
         }
 
+        //read the current ticket number
         while(!line.equals("Current Ticket Number:"))
             line = readItem();
         currentTicketNum = readItem(0);
@@ -115,6 +119,7 @@ public class Database{
         in.close();
     }
 
+    /**helper function for data parsing process */
     private String readItem() throws IOException{
         String s = in.readLine();
         if(s == null)
@@ -134,6 +139,7 @@ public class Database{
         return Integer.parseInt(in.readLine().replaceAll("\\s+", "")) > 0;
     }
 
+    /**saves database contents to file */
     public void save(){
         try{
             FileWriter out = new FileWriter(path);
@@ -205,6 +211,7 @@ public class Database{
         }catch(IOException e) { System.out.println("Error saving database to file\n" + e.getMessage()); }
     }
 
+    /**helper function for save */
     private void writeUser(FileWriter out, User u, String lead) throws IOException{
         out.write(lead + "{\n");
         out.write(lead + "    " + u.getFirstName() + "\n");
@@ -214,6 +221,7 @@ public class Database{
         out.write(lead + "}\n");
     }
 
+    /**prints out database contents for testing purposes*/
     public void print(){
         System.out.println("\nMovies:");
         for(Movie m : movies)
@@ -256,7 +264,7 @@ public class Database{
 
     public Movie findMovie(String s){
         for( Movie m : movies){
-            if(m.getName().equals(s))
+            if(m.getName().toLowerCase().equals(s.toLowerCase()))
                 return m;
         }
         return null;
@@ -289,6 +297,50 @@ public class Database{
         for(Movie m : movies)
             names.add(m.getName());
         return names;
+    }
+
+    public void openUpSeat(Receipt r){
+        Movie movie = findMovie(r.getMovieTitle());
+        if(movie == null){
+            System.out.println("Movie not Found");
+            return;
+        }
+
+        Theatre theatre = null;
+        for(Theatre t : movie.getTheatres()){
+            if(t.getName().equals(r.getTheatreName())){
+                theatre = t;
+                break;
+            }
+        }
+        if(theatre == null){
+            System.out.println("Theatre not Found");
+            return;
+        }
+
+        Showtime showtime = null;
+        for(Showtime s : theatre.getShowtimes()){
+            if((s.getStartTime() + " to " + s.getEndTime()).equals(r.getShowtime())){
+                showtime = s;
+                break;
+            }
+        }
+        if(showtime == null){
+            System.out.println("Showtime not Found");
+            return;
+        }
+        
+        for(Seat s : showtime.getSeats()){
+            String data = s.getRow() + s.getLetter() + "";
+            System.out.println("Database :" + s.getRow() + s.getLetter() + "" + "| " + (int)data.charAt(0) + " " + (int)data.charAt(1));
+            System.out.println("Receipt :" + r.getSeat() + "| " + (int)r.getSeat().charAt(0) + " " + (int)r.getSeat().charAt(1));
+            if((s.getRow() + "" + s.getLetter() + "").replaceAll("\\s", "").equals(r.getSeat().replaceAll("\\s", ""))){
+                s.setAvailable(true);
+                save();
+                return;
+            }
+        }
+        System.out.println("Seat not Found");
     }
 
     public static void main(String[] args) {

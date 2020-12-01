@@ -18,7 +18,7 @@ public class PurchaseProcess{
     public void createReceipt(){
         User current_user = new User(userInfo.get(0), userInfo.get(1),  userInfo.get(2), userInfo.get(3));
         int ticketNumber = DatabaseController.getOnlyInstance().getTicketNumber();
-        new_receipt = new Receipt(current_user, ticketNumber, ticketInfo.get(0), ticketInfo.get(1), ticketInfo.get(2), ticketInfo.get(3), Double.parseDouble(ticketInfo.get(4)),Boolean.parseBoolean(ticketInfo.get(5)));
+        new_receipt = new Receipt(current_user, ticketNumber, ticketInfo.get(0), ticketInfo.get(1), ticketInfo.get(2), ticketInfo.get(3), Double.parseDouble(ticketInfo.get(4)), false);
     }
 
     public void addReciept(){
@@ -26,30 +26,30 @@ public class PurchaseProcess{
     }
 
     public void emailUser(){
-         String email = userInfo.get(3);
-         String toSend = "Thank you for purchasing a ticket! This is a copy of your receipt: \n" + new_receipt.toString(); 
-    //     String from = "kalikalikalikali@gmail.com"; 
-    //     String host = "localhost";
+        String email = userInfo.get(3);
+        String toSend = "Thank you for purchasing a ticket! This is a copy of your receipt: \n" + new_receipt.toString(); 
+        String from = "kalikalikalikali@gmail.com"; 
+        String host = "localhost";
 
-    //     Properties properties = System.getProperties();
-    //     properties.setProperty("mail.smtp.host", host);
+        // Properties properties = System.getProperties();
+        // properties.setProperty("mail.smtp.host", host);
 
-    //     Session session = Session.getDefaultInstance(properties);
+        // Session session = Session.getDefaultInstance(properties);
 
-    //     try{
-    //         MimeMessage message = new MimeMessage(session);
-    //         message.setFrom(new InternetAddress(from));
+        // try{
+        //     MimeMessage message = new MimeMessage(session);
+        //     message.setFrom(new InternetAddress(from));
 
-    //         message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+        //     message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
 
-    //         message.setSubject("Movie Receipt");
-    //         message.setText(toSend);
+        //     message.setSubject("Movie Receipt");
+        //     message.setText(toSend);
 
-    //         Transport.send(message);
+        //     Transport.send(message);
 
-    //     }catch (MessagingException mex){
-    //         mex.printStackTrace();
-    //     }
+        // }catch (MessagingException mex){
+        //     mex.printStackTrace();
+        // }
      }
 
     public Receipt getReceipt(){

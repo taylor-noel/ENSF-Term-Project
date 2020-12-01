@@ -11,12 +11,15 @@ public class SeatView extends JFrame {
     JPanel seatDisp, screen;
     JFrame seats;
 
+    UserInterface UI;
+
     private ArrayList<String> seatsUI;
 
     String selected;
     String[] st;
 
-    public SeatView(ArrayList<String> seatInfo) {
+    public SeatView(ArrayList<String> seatInfo, UserInterface ui){
+        UI = ui;
         try {
             seatsUI = seatInfo;
             seats = new JFrame();
@@ -107,6 +110,10 @@ public class SeatView extends JFrame {
                             "Confirm", JOptionPane.OK_CANCEL_OPTION);
 
                     if (conf == JOptionPane.OK_OPTION) {
+                        //send selected option back to UI controller
+                        UI.purchaseTicketUI(selected);
+
+                        seats.dispose();
                         return;
                     }
                 }

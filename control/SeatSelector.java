@@ -16,12 +16,21 @@ public class SeatSelector{
         theatre = movie.searchTheatre(name);
     }   
         
-    public void selectShowtime(String start){
-       showtime = theatre.searchShowtime(start);
+    public void selectShowtime(int index){
+       showtime = theatre.searchShowtime(index);
     }
 
     public void selectSeat(ArrayList<String> s){
         seat = showtime.selectSeat(s);
+    }
+
+    public void selectSeat(String id){
+        for(Seat s : showtime.getSeats()){
+            if(s.getLetter() == id.charAt(1) && s.getRow() == Integer.parseInt(id.charAt(0) + "")){
+                seat = s;
+                return;
+            }
+        }
     }
 
     public Theatre getSelectedTheatre(){
@@ -34,5 +43,17 @@ public class SeatSelector{
 
     public Seat getSelectedSeat(){
         return seat;
+    }
+
+    public ArrayList<String> getInfo(){
+        ArrayList<String> list = new ArrayList<String>();
+        list.add(movie.getName());
+        list.add(theatre.getName());
+        list.add(showtime.getStartTime() + " to " + showtime.getEndTime());
+        list.add(seat.getRow() + "" + seat.getLetter() + "");
+        list.add(seat.getPrice() + "");
+        seat.setAvailable(false);
+
+        return list;
     }
 }

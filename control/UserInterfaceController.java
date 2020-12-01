@@ -21,7 +21,12 @@ public class UserInterfaceController {
 
     public UserInterfaceController() {
         movie_searcher = new MovieSearcher();
-        UI = new UserInterface(this);   
+        UI = new UserInterface(this);
+        userInfo = new ArrayList<String>();
+        ticketInfo = new ArrayList<String>();
+        userInfo = UI.getUserInfo();
+
+        refund_process = new RefundProcess(); 
     }
 
     public ArrayList<String> getMovies() {
@@ -53,6 +58,7 @@ public class UserInterfaceController {
         ArrayList<String> sTime = new ArrayList<>();
         for (Showtime s: seat_selector.getSelectedTheatre().getShowtimes()){
             sTime.add(s.toString());
+            System.out.println(s.toString());
         }
         return sTime;
     }
@@ -60,13 +66,14 @@ public class UserInterfaceController {
     public ArrayList<String> getAllSeats() {
         ArrayList<String> seatInfo = new ArrayList<>();
         for (Seat s : seat_selector.getSelectedShowTime().getSeats()) {
+            System.out.println(s.toString());
            seatInfo.add(s.getRow()+" "+s.getLetter()+" "+s.getPrice()+" "+s.isAvailable());
         }
         return seatInfo;
     }
 
-    public void setShowTime(String showTime) {
-        seat_selector.selectShowtime(showTime);
+    public void setShowTime(int index) {
+        seat_selector.selectShowtime(index);
     }
 
     public boolean setSeat(ArrayList<String> seat) {
@@ -77,22 +84,18 @@ public class UserInterfaceController {
         return true;
     }
 
+    public void setSeat(String id){
+        seat_selector.selectSeat(id);
+    }
+
     public String purchaseTicket() {
+
         //checks to see if the user has inputted valid information and selected a seat 
-        if(!ticketInfo.isEmpty() && !userInfo.isEmpty()){
-            purchase_process = new PurchaseProcess(ticketInfo, userInfo);
+        if(!userInfo.isEmpty()){
+            purchase_process = new PurchaseProcess(seat_selector.getInfo(), userInfo);
+
             purchase_process.createReceipt();
-        
-            //popup for confirming purchase 
-            int confirmed = JOptionPane.showConfirmDialog(null, "Confirm Purchase?", "User Login", JOptionPane.YES_NO_OPTION);
-
-            //if the user cancels
-            if(confirmed == JOptionPane.NO_OPTION){
-                
-                //return cancel message 
-                return "Payment has been cancelled";
-
-            }
+            purchase_process.addReciept();
 
             //send a email of the reciept to user 
             purchase_process.emailUser();
@@ -101,29 +104,24 @@ public class UserInterfaceController {
             return "A copy of the reciept has been emailed to "+userInfo.get(3)+"\n"+purchase_process.getReceipt().toString();
         }else{
             //pop up informing user to select a seat first 
-            return "Cannot purchase a ticket. Please select a seat first";
+            return "Cannot purchase a ticket. Restart and enter valid user information";
         }
     }
 
-    public void refundTicket() {
+    //creates and uses the RefundProcess class to turn a previous receipt into a ticket
+    //if the user is registered, they will not be charged a 15% admin fee 
+    public boolean refundTicket(int receipt_number) {
         //create a Refund Process object 
-        refund_process = new RefundProcess(); 
-
-        //ask user to input reciept number
-        String receipt_number = JOptionPane.showInputDialog(null, "Please enter the Ticket Number on the ticket you want to Refund\n" +
-        "NOTE: You will be charged a 15% admin fee if you are not a registered user", "Refund");
-
-        //check for registered user (15% admin fee)
-        if(receipt_number != null){
-            refund_process.modifyReciept(Integer.parseInt(receipt_number), Boolean.parseBoolean(userInfo.get(4)));
-            JOptionPane.showMessageDialog(null, "Your receipt has been turned into a credit");
-        }else{
-            JOptionPane.showMessageDialog(null, "You did not enter a valid receipt number. Please try again");
+        if(refund_process.modifyReciept(receipt_number, Boolean.parseBoolean(userInfo.get(4)))){
+            return true;
         }
+            return false;
     }
 
     public void getUserInfo() {
-        this.userInfo = UI.getUserInfo();
+        System.out.println("\n\n" + UI +"\n");
+        userInfo = new ArrayList<String>();
+        userInfo = UI.getUserInfo();
     }
 
     //checks database to see if user is registered 
@@ -133,20 +131,12 @@ public class UserInterfaceController {
 
     //adds the user as a registered user 
     public void registerUser(){
-
-        //asks user to confirm if they want to register 
-        if(JOptionPane.showConfirmDialog(null, "Press Ok to confirm your registrations", "User Registeration", JOptionPane.CANCEL_OPTION) == JOptionPane.CANCEL_OPTION){
-            //display cancellation message
-            JOptionPane.showMessageDialog(null, "You have cancelled User Registeration");
-            //cancels the process
-            return;
-        }else{
-        //registers user 
         register_process = new RegisterProcess(userInfo);
         register_process.addRegisteredUser();
-        
-        //display user registered popup 
-        JOptionPane.showMessageDialog(null, "You have successfully registered");
-        }
+        userInfo.set(4,"true");
+    }
+
+    public static void main(String[] args) {
+        UserInterfaceController uic = new UserInterfaceController();
     }
 }

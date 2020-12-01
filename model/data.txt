@@ -8,13 +8,13 @@ Movies:
             2:00 am
             6:00 am
             {
-                1
+                0
                 a
                 150.0
                 0
             }
             {
-                1
+                0
                 b
                 150.0
                 1
@@ -28,13 +28,13 @@ Movies:
             1:00 am
             3:00 am
             {
-                1
+                0
                 a
                 150.0
                 0
             }
             {
-                1
+                0
                 b
                 150.0
                 1
@@ -51,13 +51,13 @@ Movies:
             2:00 am
             6:00 am
             {
-                1
+                0
                 a
                 150.0
                 0
             }
             {
-                1
+                0
                 b
                 150.0
                 1
@@ -71,13 +71,13 @@ Movies:
             1:00 am
             3:00 am
             {
-                1
+                0
                 a
                 150.0
                 0
             }
             {
-                1
+                0
                 b
                 150.0
                 1
@@ -98,7 +98,7 @@ Tickets:
     Pual Blart Mall cop 3
     Paul Blart memorial theatre
     2:00 am to 6:00 am
-    1a
+    0a
     150.0
     0
 }
@@ -113,9 +113,24 @@ Tickets:
     Pual Blart Mall cop 2
     Cinemax
     1:00 am to 3:00 am
-    1a
+    0a
     150.0
     0
+}
+{
+    {
+        a
+        b
+        c
+        d
+    }
+    1273484
+    Paul Blart, Mall Cop 3
+    Cinemax
+    1:00 am to 3:00 am
+    0b
+    150.0
+    1
 }
 
 Registered Users:
@@ -131,6 +146,12 @@ Registered Users:
     The Mall
     Paul_Blart@themall.ca
 }
+{
+    a
+    b
+    c
+    d
+}
 
 Current Ticket Number:
-1273483
+1273485

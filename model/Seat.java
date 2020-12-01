@@ -29,6 +29,10 @@ public class Seat {
         return available;
     }
 
+    public void setAvailable(boolean b){
+        available = b;
+    }
+
     public String toString(){
         return "Seat : " + row + letter + ", price : " + price + ", available : " + available;
     }

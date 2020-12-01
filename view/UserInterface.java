@@ -7,6 +7,7 @@ import javax.swing.*;
 //import control.UserInterfaceController;
 
 import control.UserInterfaceController;
+import control.RegisteredUser;
 
 public class UserInterface extends JFrame {
     JButton select_movie, miscB, purchase_ticket, refund_ticket, register;
@@ -47,7 +48,7 @@ public class UserInterface extends JFrame {
             setTitle("Movie Registration Application");
 
             // getting user information before starting app
-            control.getUserInfo();
+            // control.getUserInfo();
 
             /*
             for (String s : getUserInfo())
@@ -64,12 +65,12 @@ public class UserInterface extends JFrame {
      * Displays all the movies on the screen
      */
     public void browseAllMovies() {
-        // ArrayList<String> movs = control.getMovies();
+        ArrayList<String> movs = control.getMovies();
 
         // for testing
-        ArrayList<String> movs = new ArrayList<>();
-        movs.add("Mov 1");
-        movs.add("Mov 2");
+        // ArrayList<String> movs = new ArrayList<>();
+        // movs.add("Mov 1");
+        // movs.add("Mov 2");
         // upto here
 
         ta.append("\n\nMovies available to see currently:\n\n\n\n\t");
@@ -102,29 +103,29 @@ public class UserInterface extends JFrame {
         }
 
         // creates a registered used class
-        // RegisteredUser ru = new RegisteredUser(userInfo[0], userInfo[1], userInfo[2],
-        // userInfo[3], userInfo[4], true);
+        RegisteredUser ru = new RegisteredUser(userInfo.get(0), userInfo.get(1), userInfo.get(2),
+        userInfo.get(3), true);
 
         // checks with database to see if user is actually registered
-        // boolean registered = control.checkRegUser(ru);
+        boolean registered = control.checkRegUser(ru);
 
         // if registered
-        // if(registered){
-        // set userInfo[5] = true
-        // userInfo[5] = "true";
+        if(registered){
+        //set userInfo[5] = true
+        userInfo.add("true");
         // continue to menu
-        // }else{
-        // if not registered
-        try {
-            // display "Would you like to register?" message
-            if (JOptionPane.showConfirmDialog(null, "Would you like to register?", "Register Prompy",
-                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(null, "Please press the register button at bottom of the screen...");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        }else{
+        
+            userInfo.add("false");
+            // if not registered
+            try {
+                // display "Would you like to register?" message
+                if (JOptionPane.showConfirmDialog(null, "Would you like to register?", "Register Prompy", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Please press the register button at bottom of the screen...");
+                }
+            } catch (Exception e) {
+            e.printStackTrace(); }
         }
-        userInfo.add("false");
 
         return userInfo;
     }
@@ -188,32 +189,51 @@ public class UserInterface extends JFrame {
                 miscB.setText("Select a Seat");
                 miscFlag = 'f';
             } else if (miscFlag == 'f') {
-
-                ArrayList<String> testSeats = new ArrayList<>();
-                for (int i = 0; i < 10; i++) {
-                    testSeats.add(i + " a 150.0 true");
-                }
-                for (int i = 0; i < 10; i++) {
-                    testSeats.add(i + " b 150.0 false");
-                }
-
-                SeatView sv = new SeatView(testSeats/* control.getAllSeats() */);
+                SeatView sv = new SeatView(control.getAllSeats(), this);
+                //sv.dispose();
 
                 System.out.println(sv.getSeat());
             }
         });
-        purchase_ticket.addActionListener((ActionEvent e) -> {
-            String message = control.purchaseTicket();
-            ta.setText(message);
-        });
+
         refund_ticket.addActionListener((ActionEvent e) -> {
-            control.refundTicket();
+            /**
+             * migrated from controller to UI 
+             * 
+             * NOTES: Does not check if reciept exists in database...needs function in database controller?
+             */
+            //ask user to input reciept number
+            String receipt_number = JOptionPane.showInputDialog(null, "Please enter the Ticket Number on the ticket you want to Refund\n" +
+            "NOTE: You will be charged a 15% admin fee if you are not a registered user");
+            if(receipt_number != null){
+                if(control.refundTicket(Integer.parseInt(receipt_number))){
+                    JOptionPane.showMessageDialog(null, "Your receipt has been turned into a credit");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Your receipt could not be found");
+                } 
+            }else{
+                JOptionPane.showMessageDialog(null, "You did not enter a valid receipt number. Please try again");
+            }
         });
         register.addActionListener((ActionEvent e) -> {
-            control.registerUser();
+            /**
+             * migrated from controller to UI 
+             */
 
-            //removed the register user button after the user has registered 
-            register.setVisible(false);
+            //asks user to confirm if they want to register 
+            if(JOptionPane.showConfirmDialog(null, "Press Ok to confirm your registrations", "User Registeration", JOptionPane.CANCEL_OPTION) == JOptionPane.CANCEL_OPTION){
+                //display cancellation message
+                JOptionPane.showMessageDialog(null, "You have cancelled User Registeration");
+                //cancels the process
+                return;
+             }else{
+                //asks control to register user 
+                control.registerUser();
+                //removed the register user button after the user has registered 
+                register.setVisible(false);
+                //display user registered popup 
+                JOptionPane.showMessageDialog(null, "You have successfully registered");
+            }
         });
 
         // add buttons to button_panel
@@ -225,25 +245,36 @@ public class UserInterface extends JFrame {
     }
 
     public void chooseShowTimes() {
-        String sTime = "";
-        sTime = JOptionPane.showInputDialog(null, "Please enter the showTime:");
+        int sTime=0;
+        try{ sTime = Integer.parseInt(JOptionPane.showInputDialog(null, "Please enter the showTime:")); }
+        catch( Exception e ){ e.printStackTrace(); }
         System.out.println(sTime);
         // control.setTheatre(tName);
+        int i = 0;
+        while (i < sTime) {
+            i++;
+        }
 
-        ta.setText("You have selected " + sTime);
+        // control.setShowTime(control.getShowtimes().get(i-1));
+        control.setShowTime(sTime);
+
+        ta.setText("You have selected " + control.getShowtimes().get(sTime).toString());
     }
 
     public void showShowTimes() {
-        // ArrayList<String> sTimes = control.getShowtimes();
+        ArrayList<String> sTimes = control.getShowtimes();
 
         // for testing
-        ArrayList<String> sTimes = new ArrayList<>();
-        sTimes.add("ST 1");
-        sTimes.add("sT 2");
+        // ArrayList<String> sTimes = new ArrayList<>();
+        // sTimes.add("ST 1");
+        // sTimes.add("sT 2");
         // upto here
+        int i = 0;
         for (String s : sTimes) {
+            ta.append(i + " : ");
             ta.append(s);
             ta.append("\n\t");
+            i++;
         }
     }
 
@@ -254,7 +285,7 @@ public class UserInterface extends JFrame {
         String tName = "";
         tName = JOptionPane.showInputDialog(null, "Please enter the Theater's name, in which you want to watch movie:");
         System.out.println(tName);
-        // control.setTheatre(tName);
+        control.setTheatre(tName);
 
         ta.setText("You have selected " + tName + ", \n\t Following are the available showtimes... \n\n\n\t");
     }
@@ -269,36 +300,54 @@ public class UserInterface extends JFrame {
         // obtain list of movie title strings from database
         // display list on the GUI
 
-        // boolean res = false;// = control.setMovie(movName);
+        boolean res = control.setMovie(movName);
 
-        // if (res == false) {
-        // ta.setText("Sorry, we can not find the movie...\n\nError 404\n\nPlease try
-        // again!");
-        // browseAllMovies();
-        // } else {
-        select_movie.setText("Select a new Movie");
+        if (res == false) {
+            ta.setText("Sorry, we can not find the movie...\n\nError 404\n\nPlease try again!");
+            browseAllMovies();
+        } else {
+            select_movie.setText("Select a new Movie");
 
-        ta.setText("You have selected to watch:\n\n\n\t" + movName
+            ta.setText("You have selected to watch:\n\n\n\t" + movName
                 + "\n\n\n\nPlease choose from following theatres...\n\n\t");
+            }
     }
 
     /**
      * Shows all the theatres available
      */
     public void showTheatres() {
-        // ArrayList<String> tAvail = control.getTheatres();
+        ArrayList<String> tAvail = control.getTheatres();
         String tName = "";
 
         // for testing
-        ArrayList<String> tAvail = new ArrayList<>();
-        tAvail.add("Theatre 1");
-        tAvail.add("Theatre 2");
+        // ArrayList<String> tAvail = new ArrayList<>();
+        // tAvail.add("Theatre 1");
+        // tAvail.add("Theatre 2");
         // upto here
 
         for (String t : tAvail) {
             ta.append(t);
             ta.append("\n\t");
         }
+    }
+
+            
+    public void purchaseTicketUI(String selected){
+        //popup for confirming purchase 
+        int confirmed = JOptionPane.showConfirmDialog(null, "Confirm Purchase?", "User Login", JOptionPane.YES_NO_OPTION);
+        String message="";
+
+        //if the user cancels
+        if(confirmed == JOptionPane.NO_OPTION){
+            //display cancel message 
+            message = "Payment has been cancelled";
+        }else if(confirmed == JOptionPane.YES_OPTION){
+            control.setSeat(selected);
+            message = control.purchaseTicket();
+        }
+
+        ta.setText(message);
     }
 
     /**
@@ -331,9 +380,9 @@ public class UserInterface extends JFrame {
         ta.setEditable(false);
     }
 
-    public static void main(String[] args) {
-        System.out.println("HI");
-        // UserInterfaceController control = new UserInterfaceController();
-        new UserInterface();
-    }
+    // public static void main(String[] args) {
+    //     System.out.println("HI");
+    //     // UserInterfaceController control = new UserInterfaceController();
+    //     new UserInterface();
+    // }
 }
