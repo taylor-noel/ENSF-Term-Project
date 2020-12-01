@@ -31,40 +31,9 @@ public class PurchaseProcess {
                 + new_receipt.toString();
         String from = "moviereg480@gmail.com";
         String host = "localhost";
+        // emial user [not implemented]
     }
-
-    /*
-     * Properties properties = System.getProperties();
-     * properties.setProperty("mail.smtp.host", host);
-     * 
-     * Session session = Session.getDefaultInstance(properties);
-     */
-    /*
-     * Properties properties = new Properties();
-     * properties.put("mail.transport.protocol","smtp");
-     * properties.put("mail.smtp.host", "smtp.gmail.com");
-     * properties.put("mail.smtp.port", "25"); properties.put("mail.smtp.auth",
-     * "true");
-     * 
-     * Authenticator auth = new Authenticator(){ protected PasswordAuthentication
-     * getPasswordAuthentication(){ return new
-     * PasswordAuthentication("moviereg480@gmail.com", "ensfensf"); } };
-     * 
-     * Session session = Session.getDefaultInstance(properties, auth);
-     * 
-     * try{ MimeMessage message = new MimeMessage(session); message.setFrom(new
-     * InternetAddress(from));
-     * 
-     * message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-     * 
-     * message.setSubject("Movie Receipt"); message.setText(toSend);
-     * 
-     * Transport.send(message);
-     * 
-     * System.out.println("EMAIL SENT");
-     * 
-     * }catch (MessagingException mex){ mex.printStackTrace(); } }
-     */
+    
     public Receipt getReceipt() {
         return new_receipt;
     }
