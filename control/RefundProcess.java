@@ -12,7 +12,7 @@ public class RefundProcess {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDateTime now = LocalDateTime.now();
         dateCurrent = dtf.format(now);
-        dataCurrent = "12/1/2020";
+        dateCurrent = "12/1/2020";
     }
 
     //uses the DatabaseController to modify the receipt in the database 

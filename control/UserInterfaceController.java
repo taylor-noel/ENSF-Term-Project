@@ -154,8 +154,4 @@ public class UserInterfaceController {
     public boolean getShowtime() {
         return seat_selector.getSelectedShowTime() != null;
     }
-
-    public static void main(String[] args) {
-        UserInterfaceController uic = new UserInterfaceController();
-    }
 }
