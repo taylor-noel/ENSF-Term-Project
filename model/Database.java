@@ -177,7 +177,7 @@ public class Database {
 
         line = readItem();
         while (line.equals("{")) {
-            RegisteredUser newRU = new RegisteredUser(readItem(), readItem(), readItem(), readItem(), true);
+            RegisteredUser newRU = new RegisteredUser(readItem(), readItem(), readItem(), readItem(), true, Integer.parseInt(readItem()));
             registered_users.add(newRU);
             readItem();
             line = readItem();
@@ -256,7 +256,7 @@ public class Database {
             out.write("\nRegistered Users:\n");
             // write all registered users
             for (RegisteredUser ru : registered_users)
-                writeUser(out, ru, "");
+                writeUser(out, ru, "", ru.getAccount());
 
             // write current ticket number header and value
             out.write("\nCurrent Ticket Number:\n");
@@ -275,6 +275,17 @@ public class Database {
         out.write(lead + "    " + u.getLastName() + "\n");
         out.write(lead + "    " + u.getAddress() + "\n");
         out.write(lead + "    " + u.getEmail() + "\n");
+        out.write(lead + "}\n");
+    }
+
+    /** helper function for save */
+    private void writeUser(FileWriter out, User u, String lead, int cardNumber) throws IOException {
+        out.write(lead + "{\n");
+        out.write(lead + "    " + u.getFirstName() + "\n");
+        out.write(lead + "    " + u.getLastName() + "\n");
+        out.write(lead + "    " + u.getAddress() + "\n");
+        out.write(lead + "    " + u.getEmail() + "\n");
+        out.write(lead + "    " + cardNumber + "\n");
         out.write(lead + "}\n");
     }
 
@@ -353,6 +364,7 @@ public class Database {
         return names;
     }
 
+    // opens up the seat reserved by a ticket being refunded
     public void openUpSeat(Receipt r) {
         Movie movie = findMovie(r.getMovieTitle());
         if (movie == null) {

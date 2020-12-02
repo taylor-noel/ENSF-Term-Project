@@ -98,6 +98,18 @@ public class UserInterface extends JFrame {
                     JOptionPane.showInputDialog(null, "Enter your address:", "User Login", JOptionPane.PLAIN_MESSAGE));
             userInfo.add(JOptionPane.showInputDialog(null, "Enter your email address:", "User Login",
                     JOptionPane.PLAIN_MESSAGE));
+            
+            String account_number = JOptionPane.showInputDialog(null, "Enter your 8-digit payment account number", "User Login",
+                    JOptionPane.PLAIN_MESSAGE);
+            
+            //checks for a valid 8-digit payment account number 
+            while(Integer.parseInt(account_number)<10000000 || Integer.parseInt(account_number)>99999999){
+                account_number = JOptionPane.showInputDialog(null, "Error. Please enter a valid 8-digit account number", "User Login",
+                JOptionPane.PLAIN_MESSAGE);
+            }
+
+            userInfo.add(account_number);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Invalid name entered, Please enter a String", "Error!",
                     JOptionPane.ERROR_MESSAGE);
@@ -105,7 +117,7 @@ public class UserInterface extends JFrame {
 
         // creates a registered used class
         RegisteredUser ru = new RegisteredUser(userInfo.get(0), userInfo.get(1), userInfo.get(2), userInfo.get(3),
-                true);
+                true,Integer.parseInt(userInfo.get(4)));
 
         // checks with database to see if user is actually registered
         boolean registered = control.checkRegUser(ru);
@@ -231,7 +243,7 @@ public class UserInterface extends JFrame {
              */
 
             // asks user to confirm if they want to register
-            if (JOptionPane.showConfirmDialog(null, "Press Ok to confirm your registrations", "User Registeration",
+            if (JOptionPane.showConfirmDialog(null, "Press Ok to confirm your registrations. You will be charged $20 to your payment account annually.", "User Registeration",
                     JOptionPane.CANCEL_OPTION) == JOptionPane.CANCEL_OPTION) {
                 // display cancellation message
                 JOptionPane.showMessageDialog(null, "You have cancelled User Registeration");

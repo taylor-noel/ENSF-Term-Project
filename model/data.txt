@@ -144,6 +144,22 @@ Tickets:
     250.0
     0
 }
+{
+    {
+        a
+        b
+        c
+        d
+    }
+    1273492
+    Paul Blart, Mall Cop 3
+    Cinemax
+    2:00 am to 6:00 am
+    12/4/2020
+    9b
+    175.0
+    0
+}
 
 Registered Users:
 {
@@ -151,25 +167,36 @@ Registered Users:
     Blart
     The Mall
     Matha_Blart@themall.ca
+    12345678
 }
 {
     Paul
     Blart
     The Mall
     Paul_Blart@themall.ca
+    12345678
 }
 {
     punit
     patel
     why
     asd@zxcv.com
+    12345678
 }
 {
     test
     user
     asd
     test@user.com
+    12345678
+}
+{
+    a
+    b
+    c
+    d
+    12345768
 }
 
 Current Ticket Number:
-1273492
+1273493

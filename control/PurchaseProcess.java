@@ -12,6 +12,7 @@ public class PurchaseProcess {
         userInfo = new ArrayList<String>(user);
     }
 
+    //creates a new receipt based on the userInfo and ticketInfo
     public void createReceipt() {
         User current_user = new User(userInfo.get(0), userInfo.get(1), userInfo.get(2), userInfo.get(3));
         int ticketNumber = DatabaseController.getOnlyInstance().getTicketNumber();
@@ -21,10 +22,13 @@ public class PurchaseProcess {
                 ticketInfo.get(3), ticketInfo.get(4), Double.parseDouble(ticketInfo.get(5)), false);
     }
 
+    //uses the databaseController to add the new_receipt to the list of receipts in the database
     public void addReciept() {
         DatabaseController.getOnlyInstance().addTicket(new_receipt);
     }
 
+    //NOT FULLY IMPLEMENTED
+    //should email the user with their receipt
     public void emailUser() {
         String email = userInfo.get(3);
         String toSend = "Thank you for purchasing a ticket! This is a copy of your receipt: \n"
@@ -34,6 +38,7 @@ public class PurchaseProcess {
         // emial user [not implemented]
     }
     
+    //returns the receipt, new_receipt
     public Receipt getReceipt() {
         return new_receipt;
     }

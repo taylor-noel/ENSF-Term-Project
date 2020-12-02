@@ -27,10 +27,12 @@ public class UserInterfaceController {
         refund_process = new RefundProcess();
     }
 
+    //returns a list of all of the movies
     public ArrayList<String> getMovies() {
         return (DatabaseController.getOnlyInstance().getMovieNames());
     }
 
+    //searches for the movie with name movie and selects the movie if available
     public boolean setMovie(String movie) {
         selected_movie = movie_searcher.searchMovie(movie);
         if (selected_movie == null) {
@@ -40,6 +42,7 @@ public class UserInterfaceController {
         return true;
     }
 
+    //returns a list of all of the theatres for the selected movie
     public ArrayList<String> getTheatres() {
         ArrayList<String> tNames = new ArrayList<>();
         for (Theatre t : selected_movie.getTheatres()) {
@@ -48,10 +51,12 @@ public class UserInterfaceController {
         return tNames;
     }
 
+    //searches for the theatre with name theatreName and selects the movie if available
     public boolean setTheatre(String theatreName) {
         return seat_selector.selectTheatre(theatreName);
     }
 
+    //returns a list of all showtimes for the selected theatre
     public ArrayList<String> getShowtimes() {
         ArrayList<String> sTime = new ArrayList<>();
         for (Showtime s : seat_selector.getSelectedTheatre().getShowtimes()) {
@@ -61,6 +66,7 @@ public class UserInterfaceController {
         return sTime;
     }
 
+    //return ta list of all of the seats for the selected showtime
     public ArrayList<String> getAllSeats() {
         ArrayList<String> seatInfo = new ArrayList<>();
         for (Seat s : seat_selector.getSelectedShowTime().getSeats()) {
@@ -70,6 +76,7 @@ public class UserInterfaceController {
         return seatInfo;
     }
 
+     //sets the seat with information matchin index
     public boolean setShowTime(int index) {
         return seat_selector.selectShowtime(index);
     }
@@ -82,6 +89,7 @@ public class UserInterfaceController {
         return true;
     }
 
+    //sets the seat with information matchin id
     public void setSeat(String id) {
         seat_selector.selectSeat(id);
     }
@@ -118,6 +126,7 @@ public class UserInterfaceController {
         return false;
     }
 
+    //gets the user information from the UI
     public void getUserInfo() {
         System.out.println("\n\n" + UI + "\n");
         userInfo = new ArrayList<String>();
@@ -141,6 +150,7 @@ public class UserInterfaceController {
         return seat_selector.getSelectedTheatre() != null;
     }
 
+    //returns true if there is a showtime selected
     public boolean getShowtime() {
         return seat_selector.getSelectedShowTime() != null;
     }
