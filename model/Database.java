@@ -412,16 +412,4 @@ public class Database {
         }
         System.out.println("Seat not Found");
     }
-
-    public static void main(String[] args) {
-        Database db = new Database();
-        try {
-            db = new Database("model/data.txt");
-        } catch (Exception e) {
-            System.out.println("Error reading from database file\n" + e.getMessage());
-        }
-
-        // db.print();
-        db.save();
-    }
 }
